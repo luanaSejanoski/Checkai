@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luana\\Checkai\\Checkai.csproj": {}
+    "C:\\Users\\luana\\OneDrive\\Documentos\\Checkai\\Checkai\\Checkai.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luana\\Checkai\\Checkai.csproj": {
+    "C:\\Users\\luana\\OneDrive\\Documentos\\Checkai\\Checkai\\Checkai.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luana\\Checkai\\Checkai.csproj",
+        "projectUniqueName": "C:\\Users\\luana\\OneDrive\\Documentos\\Checkai\\Checkai\\Checkai.csproj",
         "projectName": "Checkai",
-        "projectPath": "C:\\Users\\luana\\Checkai\\Checkai.csproj",
+        "projectPath": "C:\\Users\\luana\\OneDrive\\Documentos\\Checkai\\Checkai\\Checkai.csproj",
         "packagesPath": "C:\\Users\\luana\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luana\\Checkai\\obj\\",
+        "outputPath": "C:\\Users\\luana\\OneDrive\\Documentos\\Checkai\\Checkai\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\luana\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,6 +49,14 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[10.0.10, )"
             }
           },
           "imports": [
