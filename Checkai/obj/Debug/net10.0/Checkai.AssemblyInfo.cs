@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Checkai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5350959de0c3ec6e68f853c80050da5a6ec8b204")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fc3285019a777d784ea50f284a6f552c4bc6199")]
 [assembly: System.Reflection.AssemblyProductAttribute("Checkai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Checkai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
