@@ -1,4 +1,5 @@
 using Checkai.Data;
+using Checkai.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite("Data Source=checkai.db");
 });
+
+builder.Services.AddScoped<HabitoService>();
 
 var app = builder.Build();
 

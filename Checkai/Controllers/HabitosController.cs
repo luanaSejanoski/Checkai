@@ -1,8 +1,8 @@
+using Checkai.Services;
 using Checkai.Data;
 using Checkai.DTOs;
 using Checkai.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Checkai.Controllers;
 
@@ -10,34 +10,27 @@ namespace Checkai.Controllers;
 [Route("api/[controller]")]
 public  class HabitosController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly HabitoService _habitoService;
 
-    public HabitosController(AppDbContext context)
-    {
-        _context = context;
-    }
+    public HabitosController(HabitoService habitoService)
+{
+    _habitoService = habitoService;
+}
 
     //post para criar os habitos
     [HttpPost]
     public IActionResult Criar(CriarHabitoDto dto)
     {
-        var habito = new Habito
-        {
-            Nome = dto.Nome,
-            Descricao = dto.Descricao
-        };
-
-        _context.Habitos.Add(habito);
-        _context.SaveChanges();
-
-        return Ok();
+        var habito = _habitoService.Criar(dto);
+       
+        return Ok(habito);
     }
 
     //get para listar os habitos
     [HttpGet]
     public ActionResult<List<Habito>> Listar()
     {
-        var habitos = _context.Habitos.ToList();
+        var habitos = _habitoService.Listar();
 
         return Ok(habitos);
     }
@@ -46,7 +39,7 @@ public  class HabitosController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Habito> BuscarPorId (int id)
     {
-        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+        var habito = _habitoService.BuscarPorId(id);
 
         if(habito == null)
         {
@@ -60,35 +53,26 @@ public  class HabitosController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
     {
-        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+        var habito = _habitoService.Alterar(id, dto);
 
         if(habito == null)
         {
             return NotFound();
         }
 
-        habito.Nome = dto.Nome;
-        habito.Descricao = dto.Descricao;
-
-        _context.SaveChanges();
-
         return Ok(habito);
-
     }
 
     //delete para remover habito pelo id
     [HttpDelete("{id}")]
     public ActionResult Remover (int id)
     {
-        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+        var removido = _habitoService.Remover(id);
 
-        if(habito == null)
+        if(!removido)
         {
             return NotFound();
         }
-
-        _context.Habitos.Remove(habito);
-        _context.SaveChanges();
 
         return NoContent();
     }
