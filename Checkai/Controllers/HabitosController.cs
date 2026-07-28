@@ -1,8 +1,8 @@
-
 using Checkai.Data;
 using Checkai.DTOs;
 using Checkai.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Checkai.Controllers;
 
@@ -54,5 +54,42 @@ public  class HabitosController : ControllerBase
         }
 
         return Ok(habito);
+    }
+
+    //put para alterar habito pelo id
+    [HttpPut("{id}")]
+    public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
+    {
+        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+
+        if(habito == null)
+        {
+            return NotFound();
+        }
+
+        habito.Nome = dto.Nome;
+        habito.Descricao = dto.Descricao;
+
+        _context.SaveChanges();
+
+        return Ok(habito);
+
+    }
+
+    //delete para remover habito pelo id
+    [HttpDelete("{id}")]
+    public ActionResult Remover (int id)
+    {
+        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+
+        if(habito == null)
+        {
+            return NotFound();
+        }
+
+        _context.Habitos.Remove(habito);
+        _context.SaveChanges();
+
+        return NoContent();
     }
 }
