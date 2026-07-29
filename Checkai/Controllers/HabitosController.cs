@@ -1,5 +1,4 @@
 using Checkai.Services;
-using Checkai.Data;
 using Checkai.DTOs;
 using Checkai.Models;
 using Microsoft.AspNetCore.Mvc;
