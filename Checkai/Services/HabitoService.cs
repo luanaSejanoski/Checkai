@@ -1,20 +1,21 @@
-using System.Diagnostics;
 using Checkai.Data;
 using Checkai.DTOs;
 using Checkai.Models;
+using Checkai.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Checkai.Services;
 
 public  class HabitoService
 {
-    private readonly AppDbContext _context;
+    private readonly HabitoRepository _repository;
 
-    public HabitoService(AppDbContext context)
+    public HabitoService(HabitoRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
+    //criar habito
     public Habito Criar(CriarHabitoDto dto)
     {
         var habito = new Habito
@@ -23,25 +24,25 @@ public  class HabitoService
             Descricao = dto.Descricao
         };
 
-        _context.Habitos.Add(habito);
-        _context.SaveChanges();
-
-        return habito;
+        return _repository.Criar(habito);
     }
 
+    //listar habitos
     public List<Habito> Listar()
     {
-        return _context.Habitos.ToList();
+        return _repository.Listar();
     }
 
+    //buscra habito por id
     public Habito? BuscarPorId(int id)
     {
-        return _context.Habitos.FirstOrDefault(h => h.Id == id);
+        return _repository.BuscarPorId(id);
     }
 
+    //alterar habito
     public Habito? Alterar (int id, CriarHabitoDto dto)
     {
-        var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+        var habito = _repository.BuscarPorId(id);
 
         if(habito == null)
         {
@@ -51,23 +52,21 @@ public  class HabitoService
         habito.Nome = dto.Nome;
         habito.Descricao = dto.Descricao;
 
-        _context.SaveChanges();
-
-        return habito;
+        return _repository.Alterar(habito);
     }
 
+    //remover habito
     public bool Remover (int id)
     {
-     var habito = _context.Habitos.FirstOrDefault(h => h.Id == id);
+     var habito = _repository.BuscarPorId(id);
 
      if(habito == null)
         {
             return false;
         }   
 
-        _context.Habitos.Remove(habito);
-        _context.SaveChanges();
-
+        _repository.Remover(habito);
+        
         return true;
     }
 }

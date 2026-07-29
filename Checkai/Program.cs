@@ -1,4 +1,5 @@
 using Checkai.Data;
+using Checkai.Repositories;
 using Checkai.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<HabitoService>();
+builder.Services.AddScoped<HabitoRepository>();
 
 var app = builder.Build();
 
