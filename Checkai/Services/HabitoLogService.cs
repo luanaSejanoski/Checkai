@@ -1,3 +1,4 @@
+using System.Data;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
@@ -6,12 +7,45 @@ namespace Checkai.Services;
 
 public class HabitoLogService
 {
-    private readonly HabitoLogRepository _repository;
+    private readonly HabitoLogRepository _habitoLogRepository;
+    private readonly HabitoRepository _habitoRepository;
 
-    public HabitoLogService(HabitoLogRepository repository)
+    public HabitoLogService(HabitoLogRepository habitoLogRepository, HabitoRepository habitoRepository)
     {
-        _repository = repository;
+        _habitoLogRepository = habitoLogRepository;
+        _habitoRepository = habitoRepository;
+    }
+
+    //Criar log de conclusão do hábito
+    public HabitoLog? Criar(CriarHabitoLogDto dto)
+    {
+        var habito = _habitoRepository.BuscarPorId(dto.HabitoId);
+
+        if(habito == null)
+        {
+            return null;
+        }
+
+     //Verifica se o hábito já foi concluído hoje
+        var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId);
+
+        var jaConcluidoHoje = logs.Any(l => l.Data.Date == DateTime.Now.Date);
+
+        if(jaConcluidoHoje)
+        {
+            return null;
+        }
+        
+        //Cria e salva um novo log
+        var habitoLog = new HabitoLog
+        {
+            Data = DateTime.Now,
+            Concluido = dto.Concluido,
+            HabitoId = habito.Id
+        };
+
+        
+        return _habitoLogRepository.Criar(habitoLog);
     }
 }
 
-//criei o CriarHabitoLogDto, HabitoLogService, HabitoLog.cs

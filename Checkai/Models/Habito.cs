@@ -6,5 +6,5 @@ public class Habito
     public string Nome { get; set; } = string.Empty; //valor inicial é um texto vazio 
     public string Descricao { get; set; } = string.Empty;
 
-    public List<HabitoLog> Logs { get; set; }
+    public List<HabitoLog> Logs { get; set; } = new();
 }
