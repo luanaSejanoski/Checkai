@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<HabitoService>();
+builder.Services.AddScoped<HabitoLogService>();
 builder.Services.AddScoped<HabitoRepository>();
 builder.Services.AddScoped<HabitoLogRepository>();
 
