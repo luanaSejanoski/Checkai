@@ -1,4 +1,5 @@
 using System.Data;
+using System.Xml;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
@@ -26,9 +27,8 @@ public class HabitoLogService
             return null;
         }
 
-     //Verifica se o hábito já foi concluído hoje
+        //Verifica se o hábito já foi concluído hoje
         var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId);
-
 
         var jaConcluidoHoje = logs.Any(l => l.Data.Date == DateTime.Now.Date);
 
@@ -56,6 +56,34 @@ public class HabitoLogService
 
             };
         
+        return resposta;
+    }
+
+    public List<RespostaHabitoLogDto>? ListarPorHabito(int habitoId){
+
+        var habito = _habitoRepository.BuscarPorId(habitoId);
+
+        if(habito == null)
+        {
+            return null;
+        }
+
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+
+        var resposta = new List<RespostaHabitoLogDto>();
+
+        foreach(var log in logs)
+        {
+            var dto = new RespostaHabitoLogDto
+            {
+                Id = log.Id,
+                Data = log.Data,
+                Concluido = log.Concluido,
+                HabitoId = log.HabitoId
+            };
+
+            resposta.Add(dto);
+        }
         return resposta;
     }
 }

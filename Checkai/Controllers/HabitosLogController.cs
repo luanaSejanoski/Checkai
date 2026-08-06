@@ -29,4 +29,16 @@ public class HabitosLogController : ControllerBase
 
         return Ok(resultado);
     }
+
+    [HttpGet("{habitoId}")]
+    public IActionResult ListarPorHabito(int habitoId)
+    {
+        var resultado = _habitoLogService.ListarPorHabito(habitoId);
+
+        if(resultado == null)
+        {
+            return NotFound();
+        }
+        return Ok(resultado);
+    }
 }
