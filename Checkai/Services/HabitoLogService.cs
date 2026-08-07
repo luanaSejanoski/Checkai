@@ -86,5 +86,28 @@ public class HabitoLogService
         }
         return resposta;
     }
+
+    public List<RespostaHabitoLogDto> ListarConcluidosHoje()
+    {
+        var logsConcluidos = _habitoLogRepository.ListarConcluidosHoje();
+
+        var resposta = new List<RespostaHabitoLogDto>();
+
+        foreach(var log in logsConcluidos)
+        {
+            var dto = new RespostaHabitoLogDto
+            {
+                Id = log.Id,
+                Data = log.Data,
+                Concluido = log.Concluido,
+                HabitoId = log.HabitoId,
+                NomeHabito = log.Habito.Nome
+            };
+
+            resposta.Add(dto);
+        }
+        
+        return resposta;
+    }
 }
 

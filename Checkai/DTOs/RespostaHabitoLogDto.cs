@@ -10,4 +10,6 @@ public class RespostaHabitoLogDto
     public bool Concluido {get; set;}
 
     public int  HabitoId {get; set;}
+
+    public string NomeHabito {get; set;} = string.Empty;
 }
