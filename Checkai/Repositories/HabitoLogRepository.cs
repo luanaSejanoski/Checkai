@@ -1,6 +1,7 @@
 using Checkai.Data;
 using Checkai.Migrations;
 using Checkai.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Checkai.Repositories;
 
@@ -28,6 +29,17 @@ public class HabitoLogRepository
          .ToList();
 
          return logs;
+    }
+
+    public List<HabitoLog> ListarConcluidosHoje()
+    {
+        var logs = _context.HabitoLogs
+        .Where(h => h.Data.Date == DateTime.Now.Date && h.Concluido)
+        .Include(h => h.Habito)
+        .ToList();
+
+        return logs;
+
     }
 }
 
