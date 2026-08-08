@@ -41,4 +41,12 @@ public class HabitosLogController : ControllerBase
         }
         return Ok(resultado);
     }
+
+    [HttpGet]
+    public IActionResult ListarConcluidosHoje()
+    {
+        var resultado = _habitoLogService.ListarConcluidosHoje();
+
+        return Ok(resultado);
+    }
 }
