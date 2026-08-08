@@ -49,4 +49,6 @@ public class HabitosLogController : ControllerBase
 
         return Ok(resultado);
     }
+
+   
 }

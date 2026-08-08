@@ -1,3 +1,4 @@
+using System.Globalization;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
@@ -8,9 +9,12 @@ public  class HabitoService
 {
     private readonly HabitoRepository _repository;
 
-    public HabitoService(HabitoRepository repository)
+    private readonly HabitoLogRepository _repositoryLog;
+
+    public HabitoService(HabitoRepository repository, HabitoLogRepository repositoryLog)
     {
         _repository = repository;
+        _repositoryLog = repositoryLog;
     }
 
     //criar habito
@@ -72,4 +76,29 @@ public Habito Criar(CriarHabitoDto dto)
         
     return true;
 }
+
+    public List<HabitoHojeDto> ListarHabitosConcluidos()
+    {
+        var resposta = new List<HabitoHojeDto>();
+
+        var habitos = _repository.Listar();
+
+        var logsConcluidos = _repositoryLog.ListarConcluidosHoje();
+
+        foreach(var habito in habitos)
+        {
+            var concluidoHoje = logsConcluidos.Any(h => h.HabitoId == habito.Id);
+
+            var habitoHoje = new HabitoHojeDto
+            {
+                Id = habito.Id,
+                Nome = habito.Nome,
+                ConcluidoHoje = concluidoHoje
+            };
+
+            resposta.Add(habitoHoje);
+        }
+            return resposta;
+
+    }
 }

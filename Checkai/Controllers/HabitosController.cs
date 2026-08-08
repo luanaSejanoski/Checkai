@@ -75,4 +75,12 @@ public  class HabitosController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("hoje")]
+    public IActionResult ListarHoje()
+    {
+        var resultado = _habitoService.ListarHabitosConcluidos();
+
+        return Ok(resultado);
+    }
 }
