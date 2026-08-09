@@ -38,7 +38,7 @@ public  class HabitosController : ControllerBase
     }
 
     //get para buscar habito pelo id
-    [HttpGet("Buscar{id}")]
+    [HttpGet("Buscar/{id}")]
     public ActionResult<Habito> BuscarPorId (int id)
     {
         var habito = _habitoService.BuscarPorId(id);
@@ -52,7 +52,7 @@ public  class HabitosController : ControllerBase
     }
 
     //put para alterar habito pelo id
-    [HttpPut("Alterar{id}")]
+    [HttpPut("Alterar/{id}")]
     public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
     {
         var habito = _habitoService.Alterar(id, dto);
@@ -66,7 +66,7 @@ public  class HabitosController : ControllerBase
     }
 
     //delete para remover habito pelo id
-    [HttpDelete("Remover habito{id}")]
+    [HttpDelete("RemoverHabito/{id}")]
     public ActionResult Remover (int id)
     {
         var removido = _habitoService.Remover(id);
@@ -87,16 +87,5 @@ public  class HabitosController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpDelete("Remover concluido{id}")]
-    public IActionResult RemoverConcluido(int habitoId)
-    {
-        var resultado = _habitoLogService.RemoveConcluido(habitoId);
-
-         if(resultado == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(resultado);
-    }
+  
 }

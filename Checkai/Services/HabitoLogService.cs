@@ -79,7 +79,8 @@ public class HabitoLogService
                 Id = log.Id,
                 Data = log.Data,
                 Concluido = log.Concluido,
-                HabitoId = log.HabitoId
+                HabitoId = log.HabitoId,
+                NomeHabito =  log.Habito.Nome
             };
 
             resposta.Add(dto);
@@ -119,7 +120,7 @@ public class HabitoLogService
             return null;
     
         }
-        
+
         return log;
     }
 

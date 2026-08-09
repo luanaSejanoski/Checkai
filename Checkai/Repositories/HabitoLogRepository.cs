@@ -25,8 +25,9 @@ public class HabitoLogRepository
     public List<HabitoLog> ListarPorHabito(int habitoId)
     {
          var logs = _context.HabitoLogs
-         .Where(h => h.HabitoId == habitoId)
-         .ToList();
+        .Where(h => h.HabitoId == habitoId)
+        .Include(h => h.Habito)
+        .ToList();
 
          return logs;
     }

@@ -30,7 +30,7 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpGet("{habitoId}")]
+    [HttpGet("/ListarPorHabito/{habitoId}")]
     public IActionResult ListarPorHabito(int habitoId)
     {
         var resultado = _habitoLogService.ListarPorHabito(habitoId);
@@ -42,7 +42,7 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpGet]
+    [HttpGet("/ListarConcluidoHoje")]
     public IActionResult ListarConcluidosHoje()
     {
         var resultado = _habitoLogService.ListarConcluidosHoje();
@@ -50,5 +50,16 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-   
+     [HttpDelete("/RemoverConcluido/{id}")]
+    public IActionResult RemoverConcluido(int habitoId)
+    {
+        var resultado = _habitoLogService.RemoveConcluido(habitoId);
+
+         if(resultado == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(resultado);
+    }
 }
