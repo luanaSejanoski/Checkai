@@ -109,5 +109,19 @@ public class HabitoLogService
         
         return resposta;
     }
+
+    public HabitoLog? RemoveConcluido(int habitoId)
+    {
+        var log = _habitoLogRepository.RemoveConluido(habitoId);
+
+        if(log == null)
+        {
+            return null;
+    
+        }
+        
+        return log;
+    }
+
 }
 

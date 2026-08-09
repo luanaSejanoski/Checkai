@@ -11,13 +11,16 @@ public  class HabitosController : ControllerBase
 {
     private readonly HabitoService _habitoService;
 
-    public HabitosController(HabitoService habitoService)
+    private readonly HabitoLogService _habitoLogService;
+
+    public HabitosController(HabitoService habitoService, HabitoLogService habitoLogService)
 {
     _habitoService = habitoService;
+    _habitoLogService = habitoLogService;
 }
 
     //post para criar os habitos
-    [HttpPost]
+    [HttpPost("Criar")]
     public IActionResult Criar(CriarHabitoDto dto)
     {
         var habito = _habitoService.Criar(dto);
@@ -26,7 +29,7 @@ public  class HabitosController : ControllerBase
     }
 
     //get para listar os habitos
-    [HttpGet]
+    [HttpGet("Listar")]
     public ActionResult<List<Habito>> Listar()
     {
         var habitos = _habitoService.Listar();
@@ -35,7 +38,7 @@ public  class HabitosController : ControllerBase
     }
 
     //get para buscar habito pelo id
-    [HttpGet("{id}")]
+    [HttpGet("Buscar{id}")]
     public ActionResult<Habito> BuscarPorId (int id)
     {
         var habito = _habitoService.BuscarPorId(id);
@@ -49,7 +52,7 @@ public  class HabitosController : ControllerBase
     }
 
     //put para alterar habito pelo id
-    [HttpPut("{id}")]
+    [HttpPut("Alterar{id}")]
     public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
     {
         var habito = _habitoService.Alterar(id, dto);
@@ -63,7 +66,7 @@ public  class HabitosController : ControllerBase
     }
 
     //delete para remover habito pelo id
-    [HttpDelete("{id}")]
+    [HttpDelete("Remover habito{id}")]
     public ActionResult Remover (int id)
     {
         var removido = _habitoService.Remover(id);
@@ -80,6 +83,19 @@ public  class HabitosController : ControllerBase
     public IActionResult ListarHoje()
     {
         var resultado = _habitoService.ListarHabitosConcluidos();
+
+        return Ok(resultado);
+    }
+
+    [HttpDelete("Remover concluido{id}")]
+    public IActionResult RemoverConcluido(int habitoId)
+    {
+        var resultado = _habitoLogService.RemoveConcluido(habitoId);
+
+         if(resultado == null)
+        {
+            return NotFound();
+        }
 
         return Ok(resultado);
     }

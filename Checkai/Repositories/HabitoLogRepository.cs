@@ -39,6 +39,25 @@ public class HabitoLogRepository
         .ToList();
 
         return logs;
+    }
+
+    public HabitoLog? RemoveConluido(int habitoId)
+    {
+        var log = _context.HabitoLogs
+        .Where(h => h.HabitoId == habitoId &&
+                h.Data.Date == DateTime.Now.Date &&
+                h.Concluido)
+        .FirstOrDefault();
+
+        if(log == null)
+        {
+            return null;
+        }
+        
+       _context.HabitoLogs.Remove(log);
+       _context.SaveChanges();
+
+       return log;
 
     }
 }
