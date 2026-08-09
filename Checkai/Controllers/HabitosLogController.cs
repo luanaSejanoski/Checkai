@@ -1,5 +1,4 @@
 using Checkai.DTOs;
-using Checkai.Models;
 using Checkai.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +16,7 @@ public class HabitosLogController : ControllerBase
         _habitoLogService = habitoLogService;
     }
 
+    //marcar habito concluido
     [HttpPost]
     public IActionResult Criar(CriarHabitoLogDto dto)
     {
@@ -30,7 +30,8 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpGet("/ListarPorHabito/{habitoId}")]
+    //listar sequencia de conclusao de habito
+    [HttpGet("{habitoId}")]
     public IActionResult ListarPorHabito(int habitoId)
     {
         var resultado = _habitoLogService.ListarPorHabito(habitoId);
@@ -42,7 +43,8 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpGet("/ListarConcluidoHoje")]
+    //listar concluidos do dia
+    [HttpGet]
     public IActionResult ListarConcluidosHoje()
     {
         var resultado = _habitoLogService.ListarConcluidosHoje();
@@ -50,7 +52,8 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
-     [HttpDelete("/RemoverConcluido/{id}")]
+    //desfazer concluido
+    [HttpDelete("{id}")]
     public IActionResult RemoverConcluido(int habitoId)
     {
         var resultado = _habitoLogService.RemoveConcluido(habitoId);

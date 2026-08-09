@@ -20,7 +20,7 @@ public  class HabitosController : ControllerBase
 }
 
     //post para criar os habitos
-    [HttpPost("Criar")]
+    [HttpPost]
     public IActionResult Criar(CriarHabitoDto dto)
     {
         var habito = _habitoService.Criar(dto);
@@ -29,7 +29,7 @@ public  class HabitosController : ControllerBase
     }
 
     //get para listar os habitos
-    [HttpGet("Listar")]
+    [HttpGet]
     public ActionResult<List<Habito>> Listar()
     {
         var habitos = _habitoService.Listar();
@@ -38,7 +38,7 @@ public  class HabitosController : ControllerBase
     }
 
     //get para buscar habito pelo id
-    [HttpGet("Buscar/{id}")]
+    [HttpGet("{id}")]
     public ActionResult<Habito> BuscarPorId (int id)
     {
         var habito = _habitoService.BuscarPorId(id);
@@ -52,7 +52,7 @@ public  class HabitosController : ControllerBase
     }
 
     //put para alterar habito pelo id
-    [HttpPut("Alterar/{id}")]
+    [HttpPut("{id}")]
     public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
     {
         var habito = _habitoService.Alterar(id, dto);
@@ -66,7 +66,7 @@ public  class HabitosController : ControllerBase
     }
 
     //delete para remover habito pelo id
-    [HttpDelete("RemoverHabito/{id}")]
+    [HttpDelete("{id}")]
     public ActionResult Remover (int id)
     {
         var removido = _habitoService.Remover(id);
@@ -79,6 +79,7 @@ public  class HabitosController : ControllerBase
         return NoContent();
     }
 
+    //get para listar concluidos do dia
     [HttpGet("hoje")]
     public IActionResult ListarHoje()
     {
