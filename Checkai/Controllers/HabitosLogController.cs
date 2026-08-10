@@ -27,7 +27,7 @@ public class HabitosLogController : ControllerBase
             return BadRequest();
         }
 
-        return Ok(resultado);
+        return Created("", resultado);
     }
 
     //listar sequencia de conclusao de habito
@@ -40,6 +40,7 @@ public class HabitosLogController : ControllerBase
         {
             return NotFound();
         }
+
         return Ok(resultado);
     }
 
@@ -53,7 +54,7 @@ public class HabitosLogController : ControllerBase
     }
 
     //desfazer concluido
-    [HttpDelete("{id}")]
+    [HttpDelete("{habitoId}")]
     public IActionResult RemoverConcluido(int habitoId)
     {
         var resultado = _habitoLogService.RemoveConcluido(habitoId);
@@ -63,6 +64,6 @@ public class HabitosLogController : ControllerBase
             return NotFound();
         }
 
-        return Ok(resultado);
+        return NoContent();
     }
 }

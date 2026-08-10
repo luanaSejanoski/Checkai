@@ -77,6 +77,7 @@ public Habito Criar(CriarHabitoDto dto)
     return true;
 }
 
+    //listar habitos concluidos
     public List<HabitoHojeDto> ListarHabitosConcluidos()
     {
         var resposta = new List<HabitoHojeDto>();
