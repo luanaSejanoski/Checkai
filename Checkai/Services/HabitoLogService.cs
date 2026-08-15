@@ -160,5 +160,51 @@ public class HabitoLogService
         }
             return sequencia;
     }
+
+      public List<RespostaHabitoLogDto>? Historico(int habitoId)
+    {
+        var resultado = _habitoRepository.BuscarPorId(habitoId);
+
+        if(resultado == null)
+        {
+            return null;
+        }
+
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+
+        var Historico = new List<RespostaHabitoLogDto>();
+
+        var dataInicial = DateTime.Now.Date.AddDays(-29);
+
+        for(int i = 0; i < 30; i++)
+        {
+            var data = dataInicial.AddDays(i);
+
+            var logDoDia = logs.FirstOrDefault(l => l.Data.Date == data);
+
+            RespostaHabitoLogDto resposta;
+
+            if(logDoDia == null)
+            {
+                resposta = new RespostaHabitoLogDto
+                {
+                    Data = data,
+                    Concluido = false
+                };
+            }
+            else
+            {
+              resposta = new RespostaHabitoLogDto
+               {
+                   Data = data,
+                   Concluido = logDoDia.Concluido  
+               };
+            }
+
+             Historico.Add(resposta);
+    } 
+
+        return Historico;
+}
 }
 

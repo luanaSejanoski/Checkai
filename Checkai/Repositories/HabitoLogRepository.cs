@@ -1,4 +1,5 @@
 using Checkai.Data;
+using Checkai.DTOs;
 using Checkai.Migrations;
 using Checkai.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace Checkai.Repositories;
 public class HabitoLogRepository
 {
     private readonly AppDbContext _context;
+    
 
     public HabitoLogRepository (AppDbContext context)
     {
