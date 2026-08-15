@@ -24,6 +24,11 @@ public  class HabitosController : ControllerBase
     public IActionResult Criar(CriarHabitoDto dto)
     {
         var habito = _habitoService.Criar(dto);
+
+        if(habito == null)
+        {
+            return BadRequest();
+        }
        
         // Retorna 201 Created e informa a rota do hábito criado
         return CreatedAtAction(nameof(BuscarPorId), new { id = habito.Id }, habito);

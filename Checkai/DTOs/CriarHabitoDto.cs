@@ -12,5 +12,9 @@ public class CriarHabitoDto
     [Required]
     [MinLength(5)]
     [MaxLength(300)]
-    public string Descricao {get; set;} = string.Empty;
+    public string Descricao { get; set; } = string.Empty;
+
+    [Required]
+    
+    public int MetaDias { get; set; }
 }

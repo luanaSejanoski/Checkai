@@ -43,6 +43,7 @@ public class HabitoLogService
             Data = DateTime.Now,
             Concluido = dto.Concluido,
             HabitoId = habito.Id
+        
         };
 
         var logCriado = _habitoLogRepository.Criar(habitoLog);
@@ -118,11 +119,37 @@ public class HabitoLogService
         if(log == null)
         {
             return null;
-    
         }
 
         return log;
     }
 
+    public int CalcularSequencia(int habitoId)
+    {
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+        
+        var logsConcluidos = logs.Where(l => l.Concluido)
+        .OrderByDescending(l => l.Data)
+        .ToList();
+
+        if(logsConcluidos.Count == 0)
+        {
+            return 0;
+        }
+
+        var concluidoHoje = logsConcluidos[0].Data.Date == DateTime.Now.Date;
+
+        if (!concluidoHoje)
+        {
+            return 0;
+        }
+
+        int sequencia = 0;
+
+        for(int i = 0; ; i++)
+        {
+            
+        }
+    }
 }
 

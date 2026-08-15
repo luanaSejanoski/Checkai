@@ -2,6 +2,7 @@ using System.Globalization;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Checkai.Services;
 
@@ -18,17 +19,23 @@ public  class HabitoService
     }
 
     //criar habito
-public Habito Criar(CriarHabitoDto dto)
+public Habito? Criar(CriarHabitoDto dto)
 {
     if (string.IsNullOrWhiteSpace(dto.Nome))
     {
         throw new ArgumentException("O nome do hábito é obrigatório.");
     }
 
+    if(dto.MetaDias < 1 || dto.MetaDias > 365)
+        {
+            return null;
+        }
+
     var habito = new Habito
     {
         Nome = dto.Nome,
-        Descricao = dto.Descricao
+        Descricao = dto.Descricao,
+        MetaDias = dto.MetaDias
     };
 
     return _repository.Criar(habito);
