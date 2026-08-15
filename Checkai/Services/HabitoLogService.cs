@@ -144,12 +144,21 @@ public class HabitoLogService
             return 0;
         }
 
-        int sequencia = 0;
+        int sequencia = 1;
 
-        for(int i = 0; ; i++)
+        for(int i = 1; i < logsConcluidos.Count; i++)
         {
-            
+            // Verifica se as datas são consecutivas e interrompe a contagem ao encontrar uma falha.
+            if(logsConcluidos[i].Data.Date == logsConcluidos[i - 1].Data.Date.AddDays(-1))
+            {
+                sequencia++;
+            }
+            else
+            {
+                break;
+            }
         }
+            return sequencia;
     }
 }
 

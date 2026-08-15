@@ -66,4 +66,12 @@ public class HabitosLogController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("sequencia/{habitoId}")]
+    public IActionResult CalcularSequencia(int habitoId)
+    {
+        var resultado = _habitoLogService.CalcularSequencia(habitoId);
+
+        return Ok(resultado);
+    }
 }
