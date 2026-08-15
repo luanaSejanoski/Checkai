@@ -161,8 +161,9 @@ public class HabitoLogService
             return sequencia;
     }
 
-      public List<RespostaHabitoLogDto>? Historico(int habitoId)
+      public List<RespostaHabitoLogDto>? Historico (int habitoId)
     {
+        
         var resultado = _habitoRepository.BuscarPorId(habitoId);
 
         if(resultado == null)
@@ -171,12 +172,13 @@ public class HabitoLogService
         }
 
         var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+        
 
         var Historico = new List<RespostaHabitoLogDto>();
 
-        var dataInicial = DateTime.Now.Date.AddDays(-29);
+        var dataInicial = resultado.DataCriacao;
 
-        for(int i = 0; i < 30; i++)
+        for(int i = 0; i < resultado.MetaDias; i++)
         {
             var data = dataInicial.AddDays(i);
 
@@ -189,17 +191,22 @@ public class HabitoLogService
                 resposta = new RespostaHabitoLogDto
                 {
                     Data = data,
-                    Concluido = false
+                    Concluido = false,
+                    HabitoId = resultado.Id,
+                    NomeHabito = resultado.Nome
                 };
             }
-            else
+           else
+{
+                resposta = new RespostaHabitoLogDto
             {
-              resposta = new RespostaHabitoLogDto
-               {
-                   Data = data,
-                   Concluido = logDoDia.Concluido  
-               };
-            }
+                Id = logDoDia.Id,
+                Data = logDoDia.Data,
+                Concluido = logDoDia.Concluido,
+                HabitoId = logDoDia.HabitoId,
+                NomeHabito = resultado.Nome
+            };
+}
 
              Historico.Add(resposta);
     } 

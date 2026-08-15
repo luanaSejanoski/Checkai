@@ -74,4 +74,17 @@ public class HabitosLogController : ControllerBase
 
         return Ok(resultado);
     }
+
+    [HttpGet("historico/{habitoId}")]
+    public IActionResult Historico( int habitoId)
+    {
+        var resultado = _habitoLogService.Historico(habitoId);
+
+        if(resultado == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(resultado);
+    }
 }

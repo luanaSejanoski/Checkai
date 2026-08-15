@@ -8,5 +8,7 @@ public class Habito
 
     public int MetaDias { get; set; }
 
+    public DateTime DataCriacao { get; set; }
+    
     public List<HabitoLog> Logs { get; set; } = new();
 }

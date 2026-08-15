@@ -35,7 +35,8 @@ public Habito? Criar(CriarHabitoDto dto)
     {
         Nome = dto.Nome,
         Descricao = dto.Descricao,
-        MetaDias = dto.MetaDias
+        MetaDias = dto.MetaDias,
+        DataCriacao = DateTime.Now.Date
     };
 
     return _repository.Criar(habito);
