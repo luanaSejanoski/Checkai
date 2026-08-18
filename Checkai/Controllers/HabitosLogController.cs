@@ -87,4 +87,18 @@ public class HabitosLogController : ControllerBase
 
         return Ok(resultado);
     }
+
+    [HttpGet("dias-restantes/{habitoId}")]
+    public IActionResult CalcularDiasRestantes(int habitoId)
+    {
+        var resultado = _habitoLogService.CalcularDiasRestantes(habitoId);
+
+        if(resultado == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(resultado);
+    }
+
 }

@@ -161,6 +161,27 @@ public class HabitoLogService
             return sequencia;
     }
 
+    public int? CalcularDiasRestantes(int habitoId)
+    {
+         var resultado = _habitoRepository.BuscarPorId(habitoId);
+
+        if(resultado == null)
+        {
+            return null;
+        }
+
+        var sequenciaAtual = CalcularSequencia(habitoId);
+
+        var diasRestantes = resultado.MetaDias - sequenciaAtual;
+
+        if(diasRestantes < 0)
+        {
+            diasRestantes = 0;
+        }
+         
+         return diasRestantes;
+    }
+
       public List<RespostaHabitoLogDto>? Historico (int habitoId)
     {
         
