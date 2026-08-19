@@ -234,5 +234,37 @@ public class HabitoLogService
 
         return Historico;
 }
+
+    public ProgressoHabitoDto? CalcularProgresso(int habitoId)
+    {
+        var resultado = _habitoRepository.BuscarPorId(habitoId);
+
+        if(resultado == null)
+        {
+            return null;
+        }
+
+        var sequenciaAtual = CalcularSequencia(habitoId);
+
+        var diasRestantes = resultado.MetaDias - sequenciaAtual;
+
+        if(diasRestantes < 0)
+        {
+            diasRestantes = 0;
+        }
+
+        var metaConcluida = sequenciaAtual >= resultado.MetaDias;
+
+        var progresso = new ProgressoHabitoDto
+        {
+            NomeHabito = resultado.Nome,
+            MetaDias = resultado.MetaDias,
+            DiasRestantes = diasRestantes,
+            Concluido = metaConcluida,
+            SequenciaAtual = sequenciaAtual
+        };
+
+        return progresso;
+}
 }
 

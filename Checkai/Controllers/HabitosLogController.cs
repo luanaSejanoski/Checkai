@@ -101,4 +101,17 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
+    [HttpGet("progresso/{habitoId}")]
+    public IActionResult CalcularProgresso(int habitoId)
+    {
+        var resposta = _habitoLogService.CalcularProgresso(habitoId);
+
+        if(resposta == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(resposta);
+    }
+
 }
