@@ -67,6 +67,7 @@ public class HabitosLogController : ControllerBase
         return NoContent();
     }
 
+    //listar sequencia do habito
     [HttpGet("sequencia/{habitoId}")]
     public IActionResult CalcularSequencia(int habitoId)
     {
@@ -75,6 +76,7 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
+    //mostrar histórico do habito
     [HttpGet("historico/{habitoId}")]
     public IActionResult Historico( int habitoId)
     {
@@ -88,6 +90,7 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
+    //mostrar dias restantes para concluir o habito
     [HttpGet("dias-restantes/{habitoId}")]
     public IActionResult CalcularDiasRestantes(int habitoId)
     {
@@ -101,6 +104,7 @@ public class HabitosLogController : ControllerBase
         return Ok(resultado);
     }
 
+    //mostrar progresso do habito
     [HttpGet("progresso/{habitoId}")]
     public IActionResult CalcularProgresso(int habitoId)
     {

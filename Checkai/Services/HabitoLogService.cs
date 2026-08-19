@@ -1,5 +1,6 @@
+// Service: responsável pelas regras de negócio e pela lógica do sistema.
+
 using System.Data;
-using System.Xml;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
@@ -17,7 +18,7 @@ public class HabitoLogService
         _habitoRepository = habitoRepository;
     }
 
-    //Criar log de conclusão do hábito
+    //Criar conclusão do hábito
     public RespostaHabitoLogDto? Criar(CriarHabitoLogDto dto)
     {
         var habito = _habitoRepository.BuscarPorId(dto.HabitoId);
@@ -60,6 +61,7 @@ public class HabitoLogService
         return resposta;
     }
 
+    //Listar Log por habito
     public List<RespostaHabitoLogDto>? ListarPorHabito(int habitoId){
 
         var habito = _habitoRepository.BuscarPorId(habitoId);
@@ -89,6 +91,7 @@ public class HabitoLogService
         return resposta;
     }
 
+    //Listar logs concluidos do dia
     public List<RespostaHabitoLogDto> ListarConcluidosHoje()
     {
         var logsConcluidos = _habitoLogRepository.ListarConcluidosHoje();
@@ -112,6 +115,7 @@ public class HabitoLogService
         return resposta;
     }
 
+    //Desmarca conclusão do habito
     public HabitoLog? RemoveConcluido(int habitoId)
     {
         var log = _habitoLogRepository.RemoveConluido(habitoId);
@@ -124,6 +128,7 @@ public class HabitoLogService
         return log;
     }
 
+    //Calcula a sequencia do habito
     public int CalcularSequencia(int habitoId)
     {
         var logs = _habitoLogRepository.ListarPorHabito(habitoId);
@@ -137,6 +142,7 @@ public class HabitoLogService
             return 0;
         }
 
+        //pega o primeiro log da lista e compara com a data atual
         var concluidoHoje = logsConcluidos[0].Data.Date == DateTime.Now.Date;
 
         if (!concluidoHoje)
@@ -161,6 +167,7 @@ public class HabitoLogService
             return sequencia;
     }
 
+    //Calcula dias restantes para concluir o habito
     public int? CalcularDiasRestantes(int habitoId)
     {
          var resultado = _habitoRepository.BuscarPorId(habitoId);
@@ -182,9 +189,9 @@ public class HabitoLogService
          return diasRestantes;
     }
 
+      //Mostra historico do habito
       public List<RespostaHabitoLogDto>? Historico (int habitoId)
     {
-        
         var resultado = _habitoRepository.BuscarPorId(habitoId);
 
         if(resultado == null)
@@ -194,7 +201,6 @@ public class HabitoLogService
 
         var logs = _habitoLogRepository.ListarPorHabito(habitoId);
         
-
         var Historico = new List<RespostaHabitoLogDto>();
 
         var dataInicial = resultado.DataCriacao;
@@ -235,6 +241,7 @@ public class HabitoLogService
         return Historico;
 }
 
+    //Calcula progresso do habito
     public ProgressoHabitoDto? CalcularProgresso(int habitoId)
     {
         var resultado = _habitoRepository.BuscarPorId(habitoId);

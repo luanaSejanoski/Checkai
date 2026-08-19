@@ -1,6 +1,6 @@
+// Repository: responsável pelo acesso e manipulação dos dados no banco.
+
 using Checkai.Data;
-using Checkai.DTOs;
-using Checkai.Migrations;
 using Checkai.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,8 @@ public class HabitoLogRepository
     {
         _context = context;
     }
-
+   
+    //Criar habito
     public HabitoLog Criar (HabitoLog habitoLog)
     {
         _context.HabitoLogs.Add(habitoLog);

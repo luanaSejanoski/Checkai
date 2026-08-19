@@ -1,3 +1,5 @@
+// Repository: responsável pelo acesso e manipulação dos dados no banco.
+
 using Checkai.Data;
 using Checkai.Models;
 

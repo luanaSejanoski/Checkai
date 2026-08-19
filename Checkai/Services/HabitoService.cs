@@ -1,8 +1,9 @@
-using System.Globalization;
+// Service: responsável pelas regras de negócio e pela lógica do sistema.
+
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
-using Microsoft.AspNetCore.Http.HttpResults;
+
 
 namespace Checkai.Services;
 
@@ -19,7 +20,7 @@ public  class HabitoService
     }
 
     //criar habito
-public Habito? Criar(CriarHabitoDto dto)
+    public Habito? Criar(CriarHabitoDto dto)
 {
     if (string.IsNullOrWhiteSpace(dto.Nome))
     {
@@ -48,13 +49,13 @@ public Habito? Criar(CriarHabitoDto dto)
     return _repository.Listar();
 }
 
-    //buscra habito por id
+    //buscar habito pelo id
     public Habito? BuscarPorId(int id)
 {
     return _repository.BuscarPorId(id);
 }
 
-    //alterar habito
+    //alterar habito pelo id
     public Habito? Alterar (int id, CriarHabitoDto dto)
 {
     var habito = _repository.BuscarPorId(id);
@@ -70,7 +71,7 @@ public Habito? Criar(CriarHabitoDto dto)
     return _repository.Alterar(habito);
 }
 
-    //remover habito
+    //remover habito pelo id
     public bool Remover (int id)
 {
     var habito = _repository.BuscarPorId(id);

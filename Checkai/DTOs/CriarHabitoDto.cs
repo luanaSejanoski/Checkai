@@ -1,3 +1,5 @@
+//objeto que define quais dados entram ou saem da API
+
 using System.ComponentModel.DataAnnotations;
 
 namespace Checkai.DTOs;
@@ -15,6 +17,5 @@ public class CriarHabitoDto
     public string Descricao { get; set; } = string.Empty;
 
     [Required]
-    
     public int MetaDias { get; set; }
 }
