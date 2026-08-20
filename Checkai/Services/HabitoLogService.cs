@@ -28,6 +28,15 @@ public class HabitoLogService
             return null;
         }
 
+        var sequenciaAtual = CalcularSequencia(dto.HabitoId);
+
+        var metaConcluida = sequenciaAtual >= habito.MetaDias;
+
+        if (metaConcluida)
+        {
+            return null;
+        }
+
         //Verifica se o hábito já foi concluído hoje
         var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId);
 
