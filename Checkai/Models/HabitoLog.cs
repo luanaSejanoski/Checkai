@@ -1,3 +1,5 @@
+using Checkai.DTOs;
+
 namespace Checkai.Models;
 
 public class HabitoLog
@@ -13,4 +15,8 @@ public class HabitoLog
 
     //Navegação
     public Habito Habito { get; set; } = null!;
+
+    public Usuario Usuario { get; set; }
+
+    public int UsuarioId { get; set; }
 }
