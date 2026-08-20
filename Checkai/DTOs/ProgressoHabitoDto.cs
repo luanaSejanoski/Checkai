@@ -12,4 +12,6 @@ public class ProgressoHabitoDto
 
    public bool Concluido { get; set; }
 
+   public string? Mensagem { get; set; }
+
 }

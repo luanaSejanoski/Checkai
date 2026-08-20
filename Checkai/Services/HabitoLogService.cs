@@ -262,13 +262,21 @@ public class HabitoLogService
 
         var metaConcluida = sequenciaAtual >= resultado.MetaDias;
 
+        string? mensagem = null;
+
+        if (metaConcluida)
+        {
+            mensagem = $"🎉 Meta de {resultado.MetaDias} dias concluída!";
+        }
+
         var progresso = new ProgressoHabitoDto
         {
             NomeHabito = resultado.Nome,
             MetaDias = resultado.MetaDias,
             DiasRestantes = diasRestantes,
             Concluido = metaConcluida,
-            SequenciaAtual = sequenciaAtual
+            SequenciaAtual = sequenciaAtual,
+            Mensagem = mensagem
         };
 
         return progresso;
