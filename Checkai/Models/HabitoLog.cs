@@ -1,5 +1,3 @@
-using Checkai.DTOs;
-
 namespace Checkai.Models;
 
 public class HabitoLog

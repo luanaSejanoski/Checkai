@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
 
     public DbSet<HabitoLog> HabitoLogs { get; set; }
 
+    public DbSet<Usuario> Usuarios { get; set; }
+
     
 }
 

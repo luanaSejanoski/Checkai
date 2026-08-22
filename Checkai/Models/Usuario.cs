@@ -1,5 +1,4 @@
-using Checkai.Models;
-namespace Checkai.DTOs;
+namespace Checkai.Models;
 
 public class Usuario
 {
