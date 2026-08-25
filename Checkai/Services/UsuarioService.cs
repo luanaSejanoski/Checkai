@@ -25,4 +25,22 @@ public void Criar(CriarUsuarioDto dto)
 
         _userRepository.Criar(usuario);
 }
+
+public bool Login(LoginUsuarioDto dto)
+    {
+        var usuario = _userRepository.BuscarPorEmail(dto.Email);
+
+        if(usuario == null)
+        {
+            return false;
+        }
+
+        if(!BCrypt.Net.BCrypt.Verify(dto.Senha, usuario.SenhaHash))// se a senha nao for valida
+        {
+            return false;
+        }
+
+        return true;
+
+    }
 }

@@ -23,4 +23,17 @@ public class UsuarioController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("login")]
+    public IActionResult Login(LoginUsuarioDto dto)
+    {
+        var resultado = _userService.Login(dto);
+
+        if (!resultado)
+        {
+            return BadRequest("Usuário ou senha Inválidos!!");
+        }
+
+        return Ok("Login realizado com sucesso!!");
+    }
 }

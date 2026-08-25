@@ -14,12 +14,12 @@ public class UsuarioRepository
 
     public void Criar(Usuario usuario)
     {
-        _context.Usuarios.Add(usuario);
+        _context.Usuario.Add(usuario);
         _context.SaveChanges();
     }
 
     public Usuario? BuscarPorEmail(string email)
     {
-        return _context.Usuarios.FirstOrDefault(u => u.Email == email);
+        return _context.Usuario.FirstOrDefault(u => u.Email == email);
     }
 }
