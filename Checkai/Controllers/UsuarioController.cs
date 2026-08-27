@@ -29,11 +29,16 @@ public class UsuarioController : ControllerBase
     {
         var resultado = _userService.Login(dto);
 
-        if (!resultado)
+        if (resultado == null)
         {
             return BadRequest("Usuário ou senha Inválidos!!");
         }
 
-        return Ok("Login realizado com sucesso!!");
+        return Ok(new
+        {
+            mensagem = "Login realizado com sucesso!!",
+            token = resultado
+        }
+        );
     }
 }
