@@ -1,6 +1,7 @@
 using Checkai.Data;
 using Checkai.Repositories;
 using Checkai.Services;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,8 +15,21 @@ builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
-{
-};
+        {
+            ValidateIssuerSigningKey = true, //como verificar a assinatura
+            ValidateIssuer = true, //quem pode emitir
+            ValidateAudience = true, //para quem o token deve ser
+            ValidateLifetime = true, //se ainda está dentro da validade
+
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+              Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
+),
+
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"]
+        };
+
     });
 
 builder.Services.AddEndpointsApiExplorer();
