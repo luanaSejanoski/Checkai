@@ -22,9 +22,11 @@ public class HabitoRepository
         return habito;
     }
 
-    public List<Habito> Listar()
+    public List<Habito> Listar(int usuarioId)
     {
-        return _context.Habitos.ToList();
+        return _context.Habitos
+          .Where(h => h.UsuarioId == usuarioId)
+          .ToList();
     }
 
     public Habito? BuscarPorId(int id)

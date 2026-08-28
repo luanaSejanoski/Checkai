@@ -33,7 +33,7 @@ public void Criar(CriarUsuarioDto dto)
         _userRepository.Criar(usuario);
 }
 
-public String? Login(LoginUsuarioDto dto)
+public string? Login(LoginUsuarioDto dto)
     {
         var usuario = _userRepository.BuscarPorEmail(dto.Email);
 

@@ -44,9 +44,11 @@ public  class HabitoService
 }
 
     //listar habitos
-    public List<Habito> Listar()
+    public List<Habito> Listar(int usuarioId)
 {
-    return _repository.Listar();
+    var habitos = _repository.Listar(usuarioId);
+
+    return habitos;
 }
 
     //buscar habito pelo id
@@ -87,11 +89,11 @@ public  class HabitoService
 }
 
     //listar habitos concluidos
-    public List<HabitoHojeDto> ListarHabitosConcluidos()
+    public List<HabitoHojeDto> ListarHabitosConcluidos(int usuarioId)
     {
         var resposta = new List<HabitoHojeDto>();
 
-        var habitos = _repository.Listar();
+        var habitos = _repository.Listar(usuarioId);
 
         var logsConcluidos = _repositoryLog.ListarConcluidosHoje();
 

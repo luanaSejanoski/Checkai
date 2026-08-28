@@ -41,7 +41,9 @@ public  class HabitosController : ControllerBase
     [HttpGet]
     public ActionResult<List<Habito>> Listar()
     {
-        var habitos = _habitoService.Listar();
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var habitos = _habitoService.Listar(usuarioId);
 
         return Ok(habitos);
     }
@@ -92,7 +94,9 @@ public  class HabitosController : ControllerBase
     [HttpGet("hoje")]
     public IActionResult ListarHoje()
     {
-        var resultado = _habitoService.ListarHabitosConcluidos();
+         var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoService.ListarHabitosConcluidos(usuarioId);
 
         return Ok(resultado);
     }
