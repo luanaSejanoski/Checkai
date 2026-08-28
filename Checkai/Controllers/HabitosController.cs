@@ -2,11 +2,14 @@ using Checkai.Services;
 using Checkai.DTOs;
 using Checkai.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Checkai.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+
+[Authorize]
 public  class HabitosController : ControllerBase
 {
     private readonly HabitoService _habitoService;
