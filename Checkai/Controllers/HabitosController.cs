@@ -54,7 +54,9 @@ public  class HabitosController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Habito> BuscarPorId (int id)
     {
-        var habito = _habitoService.BuscarPorId(id);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var habito = _habitoService.BuscarPorId(id, usuarioId);
 
         if(habito == null)
         {
@@ -68,7 +70,9 @@ public  class HabitosController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult<Habito> AlterarPorId (int id, CriarHabitoDto dto)
     {
-        var habito = _habitoService.Alterar(id, dto);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var habito = _habitoService.Alterar(id, dto, usuarioId);
 
         if(habito == null)
         {
@@ -82,7 +86,9 @@ public  class HabitosController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Remover (int id)
     {
-        var removido = _habitoService.Remover(id);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var removido = _habitoService.Remover(id, usuarioId);
 
         if(!removido)
         {

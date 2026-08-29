@@ -29,9 +29,9 @@ public class HabitoRepository
           .ToList();
     }
 
-    public Habito? BuscarPorId(int id)
+    public Habito? BuscarPorId(int id, int usuarioId)
     {
-        return _context.Habitos.FirstOrDefault(h => h.Id == id);
+        return _context.Habitos.FirstOrDefault(h => h.Id == id && h.UsuarioId == usuarioId);
     }
 
     public Habito? Alterar(Habito habito)

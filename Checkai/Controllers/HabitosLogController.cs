@@ -20,7 +20,9 @@ public class HabitosLogController : ControllerBase
     [HttpPost]
     public IActionResult Criar(CriarHabitoLogDto dto)
     {
-        var resultado = _habitoLogService.Criar(dto);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.Criar(dto, usuarioId);
 
         if(resultado == null)
         {
@@ -34,7 +36,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet("{habitoId}")]
     public IActionResult ListarPorHabito(int habitoId)
     {
-        var resultado = _habitoLogService.ListarPorHabito(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.ListarPorHabito(habitoId, usuarioId);
 
         if(resultado == null)
         {
@@ -80,7 +84,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet("historico/{habitoId}")]
     public IActionResult Historico( int habitoId)
     {
-        var resultado = _habitoLogService.Historico(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.Historico(habitoId, usuarioId);
 
         if(resultado == null)
         {
@@ -94,7 +100,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet("dias-restantes/{habitoId}")]
     public IActionResult CalcularDiasRestantes(int habitoId)
     {
-        var resultado = _habitoLogService.CalcularDiasRestantes(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.CalcularDiasRestantes(habitoId, usuarioId);
 
         if(resultado == null)
         {
@@ -108,7 +116,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet("progresso/{habitoId}")]
     public IActionResult CalcularProgresso(int habitoId)
     {
-        var resposta = _habitoLogService.CalcularProgresso(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resposta = _habitoLogService.CalcularProgresso(habitoId, usuarioId);
 
         if(resposta == null)
         {

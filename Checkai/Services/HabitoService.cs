@@ -53,15 +53,15 @@ public  class HabitoService
 }
 
     //buscar habito pelo id
-    public Habito? BuscarPorId(int id)
+    public Habito? BuscarPorId(int id, int usuarioId)
 {
-    return _repository.BuscarPorId(id);
+    return _repository.BuscarPorId(id, usuarioId);
 }
 
     //alterar habito pelo id
-    public Habito? Alterar (int id, CriarHabitoDto dto)
+    public Habito? Alterar (int id, CriarHabitoDto dto, int usuarioId)
 {
-    var habito = _repository.BuscarPorId(id);
+    var habito = _repository.BuscarPorId(id, usuarioId);
 
         if(habito == null)
         {
@@ -75,9 +75,9 @@ public  class HabitoService
 }
 
     //remover habito pelo id
-    public bool Remover (int id)
+    public bool Remover (int id, int usuarioId)
 {
-    var habito = _repository.BuscarPorId(id);
+    var habito = _repository.BuscarPorId(id, usuarioId);
 
      if(habito == null)
         {

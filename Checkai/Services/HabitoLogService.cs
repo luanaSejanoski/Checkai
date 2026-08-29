@@ -19,9 +19,9 @@ public class HabitoLogService
     }
 
     //Criar conclusão do hábito
-    public RespostaHabitoLogDto? Criar(CriarHabitoLogDto dto)
+    public RespostaHabitoLogDto? Criar(CriarHabitoLogDto dto, int usuarioId)
     {
-        var habito = _habitoRepository.BuscarPorId(dto.HabitoId);
+        var habito = _habitoRepository.BuscarPorId(dto.HabitoId, usuarioId);
 
         if(habito == null)
         {
@@ -71,9 +71,9 @@ public class HabitoLogService
     }
 
     //Listar Log por habito
-    public List<RespostaHabitoLogDto>? ListarPorHabito(int habitoId){
+    public List<RespostaHabitoLogDto>? ListarPorHabito(int habitoId, int usuarioId){
 
-        var habito = _habitoRepository.BuscarPorId(habitoId);
+        var habito = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
         if(habito == null)
         {
@@ -177,9 +177,9 @@ public class HabitoLogService
     }
 
     //Calcula dias restantes para concluir o habito
-    public int? CalcularDiasRestantes(int habitoId)
+    public int? CalcularDiasRestantes(int habitoId, int usuarioId)
     {
-         var resultado = _habitoRepository.BuscarPorId(habitoId);
+         var resultado = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
         if(resultado == null)
         {
@@ -199,9 +199,9 @@ public class HabitoLogService
     }
 
       //Mostra historico do habito
-      public List<RespostaHabitoLogDto>? Historico (int habitoId)
+      public List<RespostaHabitoLogDto>? Historico (int habitoId, int usuarioId)
     {
-        var resultado = _habitoRepository.BuscarPorId(habitoId);
+        var resultado = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
         if(resultado == null)
         {
@@ -251,9 +251,9 @@ public class HabitoLogService
 }
 
     //Calcula progresso do habito
-    public ProgressoHabitoDto? CalcularProgresso(int habitoId)
+    public ProgressoHabitoDto? CalcularProgresso(int habitoId, int usuarioId)
     {
-        var resultado = _habitoRepository.BuscarPorId(habitoId);
+        var resultado = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
         if(resultado == null)
         {
