@@ -16,6 +16,6 @@ public class CriarHabitoDto
     [MaxLength(300)]
     public string Descricao { get; set; } = string.Empty;
 
-    [Required]
+    [Range(1, 365)]
     public int MetaDias { get; set; }
 }
