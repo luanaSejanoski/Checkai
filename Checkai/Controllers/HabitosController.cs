@@ -26,7 +26,9 @@ public  class HabitosController : ControllerBase
     [HttpPost]
     public IActionResult Criar(CriarHabitoDto dto)
     {
-        var habito = _habitoService.Criar(dto);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var habito = _habitoService.Criar(dto, usuarioId);
 
         if(habito == null)
         {

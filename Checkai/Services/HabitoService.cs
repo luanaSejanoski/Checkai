@@ -20,7 +20,7 @@ public  class HabitoService
     }
 
     //criar habito
-    public Habito? Criar(CriarHabitoDto dto)
+    public Habito? Criar(CriarHabitoDto dto, int usuarioId)
 {
     if (string.IsNullOrWhiteSpace(dto.Nome))
     {
@@ -37,7 +37,8 @@ public  class HabitoService
         Nome = dto.Nome,
         Descricao = dto.Descricao,
         MetaDias = dto.MetaDias,
-        DataCriacao = DateTime.Now.Date
+        DataCriacao = DateTime.Now.Date,
+        UsuarioId = usuarioId
     };
 
     return _repository.Criar(habito);
