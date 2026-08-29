@@ -28,7 +28,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(dto.HabitoId);
+        var sequenciaAtual = CalcularSequencia(dto.HabitoId, usuarioId);
 
         var metaConcluida = sequenciaAtual >= habito.MetaDias;
 
@@ -52,7 +52,8 @@ public class HabitoLogService
         {
             Data = DateTime.Now,
             Concluido = dto.Concluido,
-            HabitoId = habito.Id
+            HabitoId = habito.Id,
+            UsuarioId = usuarioId
         
         };
 
@@ -101,9 +102,9 @@ public class HabitoLogService
     }
 
     //Listar logs concluidos do dia
-    public List<RespostaHabitoLogDto> ListarConcluidosHoje()
+    public List<RespostaHabitoLogDto> ListarConcluidosHoje(int usuarioId)
     {
-        var logsConcluidos = _habitoLogRepository.ListarConcluidosHoje();
+        var logsConcluidos = _habitoLogRepository.ListarConcluidosHoje(usuarioId);
 
         var resposta = new List<RespostaHabitoLogDto>();
 
@@ -125,9 +126,15 @@ public class HabitoLogService
     }
 
     //Desmarca conclusão do habito
-    public HabitoLog? RemoveConcluido(int habitoId)
+    public HabitoLog? RemoveConcluido(int habitoId, int usuarioId)
     {
-        var log = _habitoLogRepository.RemoveConluido(habitoId);
+        var habito = _habitoRepository.BuscarPorId(habitoId, usuarioId);
+
+        if(habito == null)
+        {
+            return null;
+        }
+        var log = _habitoLogRepository.RemoveConcluido(habitoId);
 
         if(log == null)
         {
@@ -138,8 +145,15 @@ public class HabitoLogService
     }
 
     //Calcula a sequencia do habito
-    public int CalcularSequencia(int habitoId)
+    public int CalcularSequencia(int habitoId, int usuarioId)
     {
+          var habito = _habitoRepository.BuscarPorId(habitoId, usuarioId);
+
+            if(habito == null)
+            {
+                return 0;
+            }
+
         var logs = _habitoLogRepository.ListarPorHabito(habitoId);
         
         var logsConcluidos = logs.Where(l => l.Concluido)
@@ -186,7 +200,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(habitoId);
+        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId);
 
         var diasRestantes = resultado.MetaDias - sequenciaAtual;
 
@@ -260,7 +274,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(habitoId);
+        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId);
 
         var diasRestantes = resultado.MetaDias - sequenciaAtual;
 

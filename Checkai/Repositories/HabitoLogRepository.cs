@@ -35,17 +35,17 @@ public class HabitoLogRepository
          return logs;
     }
 
-    public List<HabitoLog> ListarConcluidosHoje()
+    public List<HabitoLog> ListarConcluidosHoje(int usuarioId)
     {
         var logs = _context.HabitoLogs
-        .Where(h => h.Data.Date == DateTime.Now.Date && h.Concluido)
+        .Where(h => h.Data.Date == DateTime.Now.Date && h.Concluido && h.UsuarioId == usuarioId)
         .Include(h => h.Habito)
         .ToList();
 
         return logs;
     }
 
-    public HabitoLog? RemoveConluido(int habitoId)
+    public HabitoLog? RemoveConcluido(int habitoId)
     {
         var log = _context.HabitoLogs
         .Where(h => h.HabitoId == habitoId &&

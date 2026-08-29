@@ -96,7 +96,7 @@ public  class HabitoService
 
         var habitos = _repository.Listar(usuarioId);
 
-        var logsConcluidos = _repositoryLog.ListarConcluidosHoje();
+        var logsConcluidos = _repositoryLog.ListarConcluidosHoje(usuarioId);
 
         foreach(var habito in habitos)
         {

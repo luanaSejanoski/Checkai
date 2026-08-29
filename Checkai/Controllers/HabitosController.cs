@@ -102,7 +102,7 @@ public  class HabitosController : ControllerBase
     [HttpGet("hoje")]
     public IActionResult ListarHoje()
     {
-         var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
 
         var resultado = _habitoService.ListarHabitosConcluidos(usuarioId);
 

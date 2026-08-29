@@ -1,5 +1,6 @@
 using Checkai.DTOs;
 using Checkai.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkai.Controller;
@@ -7,6 +8,7 @@ namespace Checkai.Controller;
 [ApiController]
 [Route("api/[controller]")]
 
+[Authorize]
 public class HabitosLogController : ControllerBase
 {
     private readonly HabitoLogService _habitoLogService;
@@ -52,7 +54,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet]
     public IActionResult ListarConcluidosHoje()
     {
-        var resultado = _habitoLogService.ListarConcluidosHoje();
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.ListarConcluidosHoje(usuarioId);
 
         return Ok(resultado);
     }
@@ -61,7 +65,9 @@ public class HabitosLogController : ControllerBase
     [HttpDelete("{habitoId}")]
     public IActionResult RemoverConcluido(int habitoId)
     {
-        var resultado = _habitoLogService.RemoveConcluido(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.RemoveConcluido(habitoId, usuarioId);
 
          if(resultado == null)
         {
@@ -75,7 +81,9 @@ public class HabitosLogController : ControllerBase
     [HttpGet("sequencia/{habitoId}")]
     public IActionResult CalcularSequencia(int habitoId)
     {
-        var resultado = _habitoLogService.CalcularSequencia(habitoId);
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoLogService.CalcularSequencia(habitoId, usuarioId);
 
         return Ok(resultado);
     }
