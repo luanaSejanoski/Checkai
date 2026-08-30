@@ -1,6 +1,0 @@
-@Checkai_HostAddress = http://localhost:5259
-
-GET {{Checkai_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
