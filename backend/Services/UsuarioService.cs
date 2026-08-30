@@ -3,7 +3,6 @@ using Checkai.Models;
 using Checkai.Repositories;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt; //transforma essas informações em um JWT
 using System.Security.Claims; //informações do usuário
 

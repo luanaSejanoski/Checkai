@@ -14,7 +14,7 @@ public class HabitoLog
     //Navegação
     public Habito Habito { get; set; } = null!;
 
-    public Usuario Usuario { get; set; }
+    public Usuario Usuario { get; set; } = null!;
 
     public int UsuarioId { get; set; }
 }

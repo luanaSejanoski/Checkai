@@ -1,5 +1,4 @@
 // Service: responsável pelas regras de negócio e pela lógica do sistema.
-
 using System.Data;
 using Checkai.DTOs;
 using Checkai.Models;
@@ -38,7 +37,7 @@ public class HabitoLogService
         }
 
         //Verifica se o hábito já foi concluído hoje
-        var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId);
+        var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId, usuarioId);
 
         var jaConcluidoHoje = logs.Any(l => l.Data.Date == DateTime.Now.Date);
 
@@ -81,7 +80,7 @@ public class HabitoLogService
             return null;
         }
 
-        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId);
 
         var resposta = new List<RespostaHabitoLogDto>();
 
@@ -134,7 +133,8 @@ public class HabitoLogService
         {
             return null;
         }
-        var log = _habitoLogRepository.RemoveConcluido(habitoId);
+
+        var log = _habitoLogRepository.RemoveConcluido(habitoId, usuarioId);
 
         if(log == null)
         {
@@ -154,7 +154,7 @@ public class HabitoLogService
                 return 0;
             }
 
-        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId);
         
         var logsConcluidos = logs.Where(l => l.Concluido)
         .OrderByDescending(l => l.Data)
@@ -222,7 +222,7 @@ public class HabitoLogService
             return null;
         }
 
-        var logs = _habitoLogRepository.ListarPorHabito(habitoId);
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId);
         
         var Historico = new List<RespostaHabitoLogDto>();
 

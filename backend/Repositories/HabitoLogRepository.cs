@@ -25,10 +25,10 @@ public class HabitoLogRepository
         return habitoLog;
     }
 
-    public List<HabitoLog> ListarPorHabito(int habitoId)
+    public List<HabitoLog> ListarPorHabito(int habitoId, int usuarioId)
     {
          var logs = _context.HabitoLogs
-        .Where(h => h.HabitoId == habitoId)
+        .Where(h => h.HabitoId == habitoId && h.UsuarioId == usuarioId)
         .Include(h => h.Habito)
         .ToList();
 
@@ -45,12 +45,13 @@ public class HabitoLogRepository
         return logs;
     }
 
-    public HabitoLog? RemoveConcluido(int habitoId)
+    public HabitoLog? RemoveConcluido(int habitoId, int usuarioId)
     {
         var log = _context.HabitoLogs
         .Where(h => h.HabitoId == habitoId &&
                 h.Data.Date == DateTime.Now.Date &&
-                h.Concluido)
+                h.Concluido &&
+                h.UsuarioId == usuarioId)
         .FirstOrDefault();
 
         if(log == null)
