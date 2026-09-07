@@ -43,6 +43,7 @@ function Login({onLogin}){
             console.log(dados);
 
             if(resposta.ok){
+                localStorage.setItem("token", dados.token)
                 onLogin(true)
             }
         }}>
