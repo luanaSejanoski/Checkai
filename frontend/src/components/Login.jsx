@@ -22,7 +22,34 @@ function Login({onLogin}){
               />
             </div>
 
-            <button onClick={() => onLogin(true)}>Entrar</button>
+            <button onClick={async() =>{
+
+             const resposta = await fetch("http://localhost:5259/api/Usuario/login", {
+             
+                method: "POST",
+
+                headers:{
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email,
+                    senha
+                })
+            })
+
+            const dados = await resposta.json();
+
+            console.log(dados);
+
+            if(resposta.ok){
+                onLogin(true)
+            }
+        }}>
+
+            Entrar
+            </button>
+        
         </div>
     )
     
