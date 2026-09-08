@@ -60,6 +60,7 @@ function Dashboard() {
     {habitos.map((habito) => (
     <HabitoCard
         key={habito.id}
+        id={habito.id}
         nome={habito.nome}
         descricao={habito.descricao}
     />
