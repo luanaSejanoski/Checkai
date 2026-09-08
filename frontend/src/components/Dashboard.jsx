@@ -47,6 +47,22 @@ function Dashboard() {
   const [habitos, setHabitos] = useState([])
   const [logs, setLogs] = useState([])
 
+
+  function atualizarLogs(habitoId, concluido) {
+    if(concluido){
+
+      setLogs([...logs, 
+        {
+          habitoId: habitoId,
+          concluido: concluido
+        }])
+      }else{
+        setLogs(
+          logs.filter(log => log.habitoId != habitoId)
+        )
+      }
+  }
+
   return (
     <main>
       <h1>Olá! 👋</h1>
@@ -55,13 +71,13 @@ function Dashboard() {
       <div className="cards">
         <CardResumo
           titulo="Hábitos ativos"
-          valor="5"
+          valor={habitos.length}
           icone="📝"
         />
 
         <CardResumo
           titulo="Concluídos hoje"
-          valor="3"
+          valor= {logs.filter(log => log.concluido).length}
           icone="✅"
         />
 
@@ -88,6 +104,7 @@ function Dashboard() {
             nome={habito.nome}
             descricao={habito.descricao}
             concluido={concluidoHoje}
+            atualizarLogs={atualizarLogs}
           />
         )
       })}

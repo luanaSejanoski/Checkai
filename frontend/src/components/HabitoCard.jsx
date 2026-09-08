@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function HabitoCard({id, nome, descricao, concluido}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs}){
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
 
     async function marcarConcluido(novoEstado){
@@ -8,6 +8,8 @@ function HabitoCard({id, nome, descricao, concluido}){
     const token = localStorage.getItem("token")
     
       setConcluidoHoje(novoEstado)
+
+      atualizarLogs(id, novoEstado)
 
       const resposta = await fetch("http://localhost:5259/api/HabitosLog",{
 
