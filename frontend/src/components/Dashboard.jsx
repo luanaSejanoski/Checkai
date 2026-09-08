@@ -3,33 +3,50 @@ import HabitoCard from './HabitoCard'
 import { useEffect, useState } from 'react'
 
 function Dashboard() {
-  useEffect(() =>{
+  useEffect(() => {
 
     async function buscarHabitos() {
-     const token = localStorage.getItem("token");
-     const resposta = await fetch("http://localhost:5259/api/Habitos",{
+      const token = localStorage.getItem("token")
 
-    method: "GET",
+      const resposta = await fetch("http://localhost:5259/api/Habitos", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
 
-    headers:{
-      "Content-Type": "application/json", 
-      "Authorization": `Bearer ${token}`
-    }
-  })
-
-    const dados = await resposta.json();
-
-    console.log(dados)
-    
-    setHabitos(dados)
+      const dados = await resposta.json()
+      setHabitos(dados)
     }
 
-    buscarHabitos();
-  },[]);
+    async function buscarLogs() {
+      const token = localStorage.getItem("token")
+
+      const resposta = await fetch("http://localhost:5259/api/HabitosLog", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+
+      console.log(resposta.status)
+
+      const dados = await resposta.json()
+      console.log(dados)
+
+      setLogs(dados)
+    }
+
+    buscarHabitos()
+    buscarLogs()
+
+  }, [])
 
   const [habitos, setHabitos] = useState([])
- 
- 
+  const [logs, setLogs] = useState([])
+
   return (
     <main>
       <h1>Olá! 👋</h1>
@@ -55,17 +72,25 @@ function Dashboard() {
         />
       </div>
 
-        <h2>Hábitos de hoje</h2>
-        
-    {habitos.map((habito) => (
-    <HabitoCard
-        key={habito.id}
-        id={habito.id}
-        nome={habito.nome}
-        descricao={habito.descricao}
-    />
-))}
+      <h2>Hábitos de hoje</h2>
 
+      {habitos.map((habito) => {
+        const concluidoHoje = logs.some(
+          log => log.habitoId == habito.id
+        )
+
+        console.log(habito.nome, concluidoHoje)
+
+        return (
+          <HabitoCard
+            key={habito.id}
+            id={habito.id}
+            nome={habito.nome}
+            descricao={habito.descricao}
+            concluido={concluidoHoje}
+          />
+        )
+      })}
     </main>
   )
 }

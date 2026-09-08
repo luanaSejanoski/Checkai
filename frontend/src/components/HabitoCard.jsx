@@ -1,15 +1,15 @@
 import { useState } from "react"
 
-function HabitoCard({nome, descricao, id}){
-    const [concluido, setConcluido] = useState(false)
+function HabitoCard({id, nome, descricao, concluido}){
+    const [concluidoHoje, setConcluidoHoje] = useState(concluido)
 
-    function marcarConcluido(novoEstado){
+    async function marcarConcluido(novoEstado){
     
     const token = localStorage.getItem("token")
     
-      setConcluido(novoEstado)
+      setConcluidoHoje(novoEstado)
 
-      fetch("http://localhost:5259/api/HabitosLog",{
+      const resposta = await fetch("http://localhost:5259/api/HabitosLog",{
 
         method: "POST",
 
@@ -23,6 +23,8 @@ function HabitoCard({nome, descricao, id}){
             concluido: novoEstado
         })
       })
+      const dados = await resposta.json()
+    console.log(dados)
 
     }
     
@@ -35,14 +37,11 @@ function HabitoCard({nome, descricao, id}){
 
             <input
                 type="checkbox"
-                checked={concluido}
-                onChange={() => marcarConcluido(!concluido)}
+                checked={concluidoHoje}
+                onChange={() => marcarConcluido(!concluidoHoje)}
             />
         </div>
     )
 }
-
-
-
 
 export default HabitoCard

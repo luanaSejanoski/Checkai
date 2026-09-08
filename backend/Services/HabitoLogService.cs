@@ -39,13 +39,11 @@ public class HabitoLogService
         //Verifica se o hábito já foi concluído hoje
         var logs =  _habitoLogRepository.ListarPorHabito(dto.HabitoId, usuarioId);
 
-        var jaConcluidoHoje = logs.Any(l => l.Data.Date == DateTime.Now.Date);
-
-        if(jaConcluidoHoje)
+        var logHoje = logs.FirstOrDefault(l => l.Data.Date == DateTime.Now.Date);
+  
+        if(logHoje == null)
         {
-            return null;
-        }
-        
+
         //Cria e salva um novo log
         var habitoLog = new HabitoLog
         {
@@ -53,7 +51,6 @@ public class HabitoLogService
             Concluido = dto.Concluido,
             HabitoId = habito.Id,
             UsuarioId = usuarioId
-        
         };
 
         var logCriado = _habitoLogRepository.Criar(habitoLog);
@@ -68,6 +65,28 @@ public class HabitoLogService
             };
         
         return resposta;
+        }
+
+        if(dto.Concluido == false)
+        {
+            var log = _habitoLogRepository.RemoveConcluido(dto.HabitoId, usuarioId);
+
+            if (log == null)
+            {
+                return null;
+            }
+
+            var resposta = new RespostaHabitoLogDto
+            {
+                Id = log.Id,
+                Data = log.Data,
+                Concluido = log.Concluido,
+                HabitoId = log.HabitoId
+            };
+
+            return resposta;
+        }
+        return null;
     }
 
     //Listar Log por habito
