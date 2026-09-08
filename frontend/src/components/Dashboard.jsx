@@ -1,21 +1,35 @@
 import CardResumo from './CardResumo'
 import HabitoCard from './HabitoCard'
+import { useEffect, useState } from 'react'
 
 function Dashboard() {
-  const habitos =[
-    {
-        nome: 'Caminhar',
-        descricao: '30 minutos'
-    },
-    {
-        nome: 'Estudar C#',
-        descricao: '1 hora'
-    },
-    {
-        nome: 'Beber água',
-        descricao: '2L'
+  useEffect(() =>{
+
+    async function buscarHabitos() {
+     const token = localStorage.getItem("token");
+     const resposta = await fetch("http://localhost:5259/api/Habitos",{
+
+    method: "GET",
+
+    headers:{
+      "Content-Type": "application/json", 
+      "Authorization": `Bearer ${token}`
     }
-  ]
+  })
+
+    const dados = await resposta.json();
+
+    console.log(dados)
+    
+    setHabitos(dados)
+    }
+
+    buscarHabitos();
+  },[]);
+
+  const [habitos, setHabitos] = useState([])
+ 
+ 
   return (
     <main>
       <h1>Olá! 👋</h1>
@@ -43,9 +57,9 @@ function Dashboard() {
 
         <h2>Hábitos de hoje</h2>
         
-    {habitos.map((habito, index) => (
+    {habitos.map((habito) => (
     <HabitoCard
-        key={index}
+        key={habito.id}
         nome={habito.nome}
         descricao={habito.descricao}
     />
