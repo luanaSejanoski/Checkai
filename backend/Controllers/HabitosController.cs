@@ -109,5 +109,15 @@ public  class HabitosController : ControllerBase
         return Ok(resultado);
     }
 
+    [HttpGet("maior-sequencia")]
+    public IActionResult MaiorSequencia()
+    {
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var resultado = _habitoService.CalcularMaiorSequencia(usuarioId);
+
+        return Ok(resultado);
+    }
+
   
 }

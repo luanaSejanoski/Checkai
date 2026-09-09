@@ -24,7 +24,9 @@ function Dashboard() {
       const token = localStorage.getItem("token")
 
       const resposta = await fetch("http://localhost:5259/api/HabitosLog", {
+
         method: "GET",
+
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
@@ -39,13 +41,33 @@ function Dashboard() {
       setLogs(dados)
     }
 
+    async function buscarMaiorSequencia() {
+      const token =localStorage.getItem("token");
+
+      const resposta = await fetch("http://localhost:5259/api/Habitos/maior-sequencia",{
+
+      method: "GET",
+
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+
+      });
+
+      const dados = await resposta.json()
+      setMaiorSequencia(dados);
+}
+
     buscarHabitos()
     buscarLogs()
+    buscarMaiorSequencia()
 
   }, [])
 
   const [habitos, setHabitos] = useState([])
   const [logs, setLogs] = useState([])
+  const [maiorSequencia, setMaiorSequencia] = useState(0);
 
 
   function atualizarLogs(habitoId, concluido) {
@@ -83,7 +105,7 @@ function Dashboard() {
 
         <CardResumo
           titulo="Sequência atual"
-          valor="7 dias"
+          valor={maiorSequencia}
           icone="🔥"
         />
       </div>

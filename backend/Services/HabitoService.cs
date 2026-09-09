@@ -114,4 +114,51 @@ public  class HabitoService
             return resposta;
 
     }
+
+    public int CalcularMaiorSequencia(int usuarioId)
+    {
+        var habitos = _repository.Listar(usuarioId);
+
+        var maiorSequencia = 0;
+
+        foreach(var habito in habitos)
+        {
+            var logs = _repositoryLog.ListarPorHabito(habito.Id, usuarioId);
+
+            var logsConcluidos = logs.Where(l => l.Concluido)
+             .OrderByDescending(l => l.Data)
+             .ToList();
+
+             if(logsConcluidos.Count == 0)
+            {
+                continue;
+            }
+
+             if(logsConcluidos[0].Data.Date != DateTime.Now.Date)
+            {
+                continue;
+            }
+
+            int sequencia = 1;
+
+            for(int i = 1; i < logsConcluidos.Count; i++)
+            {
+                if(logsConcluidos[i].Data.Date == logsConcluidos[i - 1].Data.Date.AddDays(-1))
+                {
+                   sequencia++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if(sequencia > maiorSequencia)
+            {
+                 maiorSequencia = sequencia;
+            }
+
+        }
+            return maiorSequencia;
+    }
 }
