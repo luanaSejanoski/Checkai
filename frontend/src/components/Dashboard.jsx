@@ -65,7 +65,6 @@ function Dashboard() {
       setMaiorSequencia(dados);
 }
 
-
   const [habitos, setHabitos] = useState([])
   const [logs, setLogs] = useState([])
   const [maiorSequencia, setMaiorSequencia] = useState(0);
@@ -79,6 +78,7 @@ function Dashboard() {
           habitoId: habitoId,
           concluido: concluido
         }])
+
       }else{
         setLogs(
           logs.filter(log => log.habitoId != habitoId)
