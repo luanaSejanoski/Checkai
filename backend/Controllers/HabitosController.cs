@@ -108,6 +108,7 @@ public  class HabitosController : ControllerBase
 
         return Ok(resultado);
     }
+    
 
     [HttpGet("maior-sequencia")]
     public IActionResult MaiorSequencia()

@@ -1,7 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia}){
+  
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
+
+    useEffect(() => {
+    setConcluidoHoje(concluido)
+}, [concluido])
 
     async function marcarConcluido(novoEstado){
     
@@ -26,7 +31,11 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs}){
         })
       })
       const dados = await resposta.json()
-    console.log(dados)
+      console.log(dados)
+
+    if(resposta.ok){
+        buscarMaiorSequencia();
+    }
 
     }
     

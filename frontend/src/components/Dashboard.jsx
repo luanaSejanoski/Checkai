@@ -41,7 +41,13 @@ function Dashboard() {
       setLogs(dados)
     }
 
-    async function buscarMaiorSequencia() {
+    buscarHabitos()
+    buscarLogs()
+    buscarMaiorSequencia()
+
+  }, [])
+
+  async function buscarMaiorSequencia() {
       const token =localStorage.getItem("token");
 
       const resposta = await fetch("http://localhost:5259/api/Habitos/maior-sequencia",{
@@ -59,11 +65,6 @@ function Dashboard() {
       setMaiorSequencia(dados);
 }
 
-    buscarHabitos()
-    buscarLogs()
-    buscarMaiorSequencia()
-
-  }, [])
 
   const [habitos, setHabitos] = useState([])
   const [logs, setLogs] = useState([])
@@ -104,7 +105,7 @@ function Dashboard() {
         />
 
         <CardResumo
-          titulo="Sequência atual"
+          titulo="Maior Sequência"
           valor={maiorSequencia}
           icone="🔥"
         />
@@ -127,6 +128,7 @@ function Dashboard() {
             descricao={habito.descricao}
             concluido={concluidoHoje}
             atualizarLogs={atualizarLogs}
+            buscarMaiorSequencia={buscarMaiorSequencia}
           />
         )
       })}

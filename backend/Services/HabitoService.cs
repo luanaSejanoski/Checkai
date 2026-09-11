@@ -134,11 +134,6 @@ public  class HabitoService
                 continue;
             }
 
-             if(logsConcluidos[0].Data.Date != DateTime.Now.Date)
-            {
-                continue;
-            }
-
             int sequencia = 1;
 
             for(int i = 1; i < logsConcluidos.Count; i++)
@@ -149,10 +144,16 @@ public  class HabitoService
                 }
                 else
                 {
-                    break;
+                    // sequência acabou por causa de uma quebra
+                    if(sequencia > maiorSequencia)
+                    {
+                        maiorSequencia = sequencia;
+                    }
+
+                    sequencia = 1;
                 }
             }
-
+            //sequência acabou porque chegamos ao final da lista.
             if(sequencia > maiorSequencia)
             {
                  maiorSequencia = sequencia;
