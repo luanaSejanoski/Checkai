@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias}){
   
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
     const [sequenciaAtual, setSequenciaAtual] = useState(0);
@@ -71,6 +71,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             <h3>{nome}</h3>
             <p>{descricao}</p>
             <p>Sequência atual: 🔥{sequenciaAtual}</p>
+            <p>Meta: {metaDias} dias </p>
             </div>
 
             <input

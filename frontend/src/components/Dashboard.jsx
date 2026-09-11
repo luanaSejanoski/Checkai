@@ -126,6 +126,7 @@ function Dashboard() {
             id={habito.id}
             nome={habito.nome}
             descricao={habito.descricao}
+            metaDias={habito.metaDias}
             concluido={concluidoHoje}
             atualizarLogs={atualizarLogs}
             buscarMaiorSequencia={buscarMaiorSequencia}
