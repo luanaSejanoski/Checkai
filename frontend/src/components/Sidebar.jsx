@@ -1,14 +1,14 @@
 import './Sidebar.css';
 
-function Sidebar() {
+function Sidebar({ setPagina }) {
   return (
     <aside>
       <h2>Checkaí</h2>
 
       <nav>
         <ul>
-            <li>🏠 Dashboard</li>
-            <li>📝 Meus hábitos</li>
+            <li onClick={() => setPagina("dashboard")}>🏠 Dashboard</li>            
+            <li onClick={() => setPagina("habitos")}>📝 Meus hábitos</li>
             <li>📅 Histórico</li>
             <li>👤 Perfil</li>
             <li>🚪 Sair</li>
