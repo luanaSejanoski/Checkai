@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo}){
   
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
     const [sequenciaAtual, setSequenciaAtual] = useState(0);
@@ -64,21 +64,33 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
         buscarSequencia();
     }
     }
-    
     return(
-        <div className="habito-card">
+        <div className={modo === "gerenciamento" ? "habito-card gerenciamento" : "habito-card"}>
             <div>
             <h3>{nome}</h3>
             <p>{descricao}</p>
-            <p>Sequência atual: 🔥{sequenciaAtual}</p>
+            {modo === "dashboard" &&(
+                <p>Sequência atual: 🔥{sequenciaAtual}</p>
+            )}
             <p>Meta: {metaDias} dias </p>
-            </div>
 
-            <input
-                type="checkbox"
-                checked={concluidoHoje}
-                onChange={() => marcarConcluido(!concluidoHoje)}
-            />
+            {modo === "gerenciamento" && (
+                <>
+                <div className="botoes">
+                <button>Editar</button>
+                <button>Excluir</button>
+                </div>
+                </>
+            )}
+
+            </div>
+            {modo === "dashboard" &&(
+                <input
+                    type="checkbox"
+                    checked={concluidoHoje}
+                    onChange={() => marcarConcluido(!concluidoHoje)}
+                />
+            )}
         </div>
     )
 }

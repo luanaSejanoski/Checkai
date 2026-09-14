@@ -14,10 +14,12 @@ const [pagina, setPagina] = useState("dashboard")
 
     }
       return <div className="app">
-      <Sidebar setPagina={setPagina}/>
-      {pagina === "dashboard" && <Dashboard />}
-      {pagina === "habitos" && <MeusHabitos />}
-      
+  <Sidebar setPagina={setPagina} />
+
+  <main className="conteudo">
+    {pagina === "dashboard" && <Dashboard />}
+    {pagina === "habitos" && <MeusHabitos />}
+  </main>
 </div>
   
 }

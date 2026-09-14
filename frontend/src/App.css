@@ -76,4 +76,70 @@ main{
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     width: 100%;
+    align-items: start;
+}
+
+.habito-card.gerenciamento{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 450px;
+  padding: 16px 20px;
+  margin-top: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.botoes{
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.meus-habitos-titulo{
+  margin-left: 20px;
+}
+
+.conteudo{
+  flex: 1;
+}
+
+.habito-card.gerenciamento button{
+  background-color: blueviolet; 
+  color: white;
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+
+.cabecalho-habitos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    align-items: flex-start;
+    position: relative;
+
+}
+
+.adicionar-habito{
+    margin-top: 30px;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: blueviolet;
+    color: white;
+}
+
+.acoes-habitos-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+}
+
+.form-habitos{
+  position: absolute;
+  top: 100%;
+  margin-top: 80px;
 }

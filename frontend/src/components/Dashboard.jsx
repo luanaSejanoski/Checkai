@@ -130,6 +130,7 @@ function Dashboard() {
             concluido={concluidoHoje}
             atualizarLogs={atualizarLogs}
             buscarMaiorSequencia={buscarMaiorSequencia}
+            modo="dashboard"
           />
         )
       })}
