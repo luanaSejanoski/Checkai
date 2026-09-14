@@ -29,6 +29,48 @@ function MeusHabitos() {
       buscarHabitos()
 }, [])
 
+    async function CriarHabito() {
+     const token = localStorage.getItem("token");
+     const resposta = await fetch("http://localhost:5259/api/Habitos", {
+
+        method: "POST",
+
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+            nome: nome,
+            descricao: descricao,
+            metaDias: metaDias
+        })
+     });
+
+     const dados = await resposta.json();
+
+     if(resposta.ok){
+        console.log(dados);
+     }
+}
+
+    async function ExcluirHabito(id){
+    const token = localStorage.getItem("token");
+    const resposta = await fetch(`http://localhost:5259/api/Habitos/${id}`,{
+
+        method: "DELETE",
+
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(resposta.ok){
+        buscarHabitos();
+    }
+}
+
   return (
     <>
         <div className="cabecalho-habitos">
@@ -63,7 +105,8 @@ function MeusHabitos() {
                     onChange={(e) => setMetaDias(e.target.value)} 
                     /> <br /><br />
          
-                <button>Salvar</button>
+                <button onClick={() => CriarHabito()}>Salvar</button>
+
                 <button onClick={() => setMostrarForm(false)}
                     >Cancelar</button>
             </div>
@@ -79,6 +122,7 @@ function MeusHabitos() {
                     nome={habito.nome}
                     descricao={habito.descricao}
                     metaDias={habito.metaDias}
+                    excluir={ExcluirHabito}
                     modo="gerenciamento"
                 />
             ))}

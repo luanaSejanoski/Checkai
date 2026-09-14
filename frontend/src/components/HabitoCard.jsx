@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo, excluir}){
   
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
     const [sequenciaAtual, setSequenciaAtual] = useState(0);
@@ -78,7 +78,8 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
                 <>
                 <div className="botoes">
                 <button>Editar</button>
-                <button>Excluir</button>
+                <button onClick={() => excluir(id)}>
+                    Excluir</button>
                 </div>
                 </>
             )}

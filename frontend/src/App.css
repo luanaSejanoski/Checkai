@@ -73,9 +73,9 @@ main{
 
 .habitos-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    width: 100%;
+    width: 70%;
     align-items: start;
 }
 
@@ -142,4 +142,12 @@ main{
   position: absolute;
   top: 100%;
   margin-top: 80px;
+}
+
+.form-habitos button{
+  background-color: blueviolet; 
+  color: white;
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin: 6px;
 }
