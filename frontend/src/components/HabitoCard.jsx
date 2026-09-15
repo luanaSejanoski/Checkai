@@ -71,7 +71,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
 
     async function salvarEdicao(id) {
 
-        console.log("entrou na função")
+        console.log("Meta dias enviada:", metaDiasEditado)
 
       const token = localStorage.getItem("token");
 

@@ -70,6 +70,7 @@ public  class HabitoService
 
         habito.Nome = dto.Nome;
         habito.Descricao = dto.Descricao;
+        habito.MetaDias = dto.MetaDias;
 
     return _repository.Alterar(habito);
 }
