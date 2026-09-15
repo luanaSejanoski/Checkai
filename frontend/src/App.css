@@ -115,7 +115,6 @@ main{
 .cabecalho-habitos {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     width: 90%;
     align-items: flex-start;
     position: relative;
@@ -142,7 +141,10 @@ main{
   position: absolute;
   top: 100%;
   margin-top: 80px;
-  background-color: rgb(247, 241, 241);
+ right: -45px;
+  background-color:  white;
+  border: 1px solid blueviolet;
+  padding: 20px;
  
 }
 
