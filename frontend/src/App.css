@@ -142,6 +142,8 @@ main{
   position: absolute;
   top: 100%;
   margin-top: 80px;
+  background-color: rgb(247, 241, 241);
+ 
 }
 
 .form-habitos button{
@@ -150,4 +152,16 @@ main{
   border-radius: 5px;
   padding: 5px 8px;
   margin: 6px;
+}
+
+.form-edicao input {
+  width: 250px;
+  height: 25px;
+  margin-top: 8px;
+}
+
+.form-edicao{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

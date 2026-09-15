@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo, excluir}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo, excluir, buscarHabitos}){
   
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
-    const [sequenciaAtual, setSequenciaAtual] = useState(0);
+    const [sequenciaAtual, setSequenciaAtual] = useState(0)
+    const [editando, setEditando] = useState(false)
+    const [nomeEditado, setNomeEditado] = useState(nome)
+    const [descEditada, setDescEditada ] = useState(descricao)
+    const [metaDiasEditado, setMetaDiasEditado] = useState(metaDias)
 
       useEffect(() => {
       buscarSequencia()
@@ -64,6 +68,37 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
         buscarSequencia();
     }
     }
+
+    async function salvarEdicao(id) {
+
+        console.log("entrou na função")
+
+      const token = localStorage.getItem("token");
+
+      const resposta = await fetch(`http://localhost:5259/api/Habitos/${id}`,{
+        
+      method: "PUT",
+
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+
+      body: JSON.stringify({
+        nome: nomeEditado,
+        descricao: descEditada,
+        metaDias: metaDiasEditado
+      })  
+    });
+
+    console.log("status:", resposta.status);
+
+      if(resposta.ok){
+        buscarHabitos();
+        setEditando(false);
+      }
+}
+
     return(
         <div className={modo === "gerenciamento" ? "habito-card gerenciamento" : "habito-card"}>
             <div>
@@ -75,15 +110,49 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             <p>Meta: {metaDias} dias </p>
 
             {modo === "gerenciamento" && (
-                <>
-                <div className="botoes">
-                <button>Editar</button>
-                <button onClick={() => excluir(id)}>
-                    Excluir</button>
-                </div>
-                </>
-            )}
+    <>
+        {editando && (
+            <div className="form-edicao">
+                <input
+                    value={nomeEditado}
+                    onChange={(e) => setNomeEditado(e.target.value)}
+                />
 
+                <input
+                    value={descEditada}
+                    onChange={(e) => setDescEditada(e.target.value)}
+                />
+
+                <input
+                    value={metaDiasEditado}
+                    onChange={(e) => setMetaDiasEditado(e.target.value)}
+                />
+
+                <div className="botoes">
+                    <button onClick={() => salvarEdicao(id)}>
+                        Salvar
+                    </button>
+
+                    <button onClick={() => setEditando(false)}>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        )}
+
+        {!editando && (
+            <div className="botoes">
+                <button onClick={() => setEditando(true)}>
+                    Editar
+                </button>
+
+                <button onClick={() => excluir(id)}>
+                    Excluir
+                </button>
+            </div>
+        )}
+    </>
+)}
             </div>
             {modo === "dashboard" &&(
                 <input
@@ -94,6 +163,6 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             )}
         </div>
     )
-}
 
+}
 export default HabitoCard

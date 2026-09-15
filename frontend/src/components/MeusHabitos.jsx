@@ -123,6 +123,7 @@ function MeusHabitos() {
                     descricao={habito.descricao}
                     metaDias={habito.metaDias}
                     excluir={ExcluirHabito}
+                    buscarHabitos={buscarHabitos}
                     modo="gerenciamento"
                 />
             ))}
