@@ -9,7 +9,7 @@ function Sidebar({ setPagina }) {
         <ul>
             <li onClick={() => setPagina("dashboard")}>🏠 Dashboard</li>            
             <li onClick={() => setPagina("habitos")}>📝 Meus hábitos</li>
-            <li>📅 Histórico</li>
+            <li onClick={() => setPagina("historico")}>📅 Histórico</li>
             <li>👤 Perfil</li>
             <li>🚪 Sair</li>
         </ul>

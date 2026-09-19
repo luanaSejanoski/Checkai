@@ -51,6 +51,7 @@ function MeusHabitos() {
 
      if(resposta.ok){
         console.log(dados);
+        buscarHabitos()
      }
 }
 
@@ -118,7 +119,6 @@ function MeusHabitos() {
                 <button onClick={() => setMostrarForm(false)}
                     >Cancelar</button>
                 </div>
-                
             </div>
 )}
           </div>

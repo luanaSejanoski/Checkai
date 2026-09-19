@@ -92,6 +92,7 @@ public class HabitosLogController : ControllerBase
     [HttpGet("historico/{habitoId}")]
     public IActionResult Historico( int habitoId)
     {
+        Console.WriteLine("ENTROU NO CONTROLLER HISTORICO");
         var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
 
         var resultado = _habitoLogService.Historico(habitoId, usuarioId);

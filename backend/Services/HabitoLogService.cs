@@ -233,6 +233,7 @@ public class HabitoLogService
 
       //Mostra historico do habito
       public List<RespostaHabitoLogDto>? Historico (int habitoId, int usuarioId)
+      
     {
         var resultado = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
@@ -247,11 +248,14 @@ public class HabitoLogService
 
         var dataInicial = resultado.DataCriacao;
 
-        for(int i = 0; i < resultado.MetaDias; i++)
+        var dataFinal = DateTime.Today;
+
+
+        for(int i = 0; dataInicial.AddDays(i) <= dataFinal; i++)
         {
             var data = dataInicial.AddDays(i);
 
-            var logDoDia = logs.FirstOrDefault(l => l.Data.Date == data);
+            var logDoDia = logs.FirstOrDefault(l => l.Data.Date == data.Date);
 
             RespostaHabitoLogDto resposta;
 
