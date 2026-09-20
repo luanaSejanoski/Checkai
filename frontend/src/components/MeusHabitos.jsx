@@ -7,6 +7,39 @@ function MeusHabitos() {
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [metaDias, setMetaDias] = useState("");
+    const [erros, setErros] = useState({});
+
+    function mensagemErro(campo, mensagem){
+        if(campo == "Nome"){
+            if(mensagem.includes("required")){
+                return "Nome é obrigatório!";
+            }
+            if(mensagem.includes("minimum length")){
+                return "O nome deve ter no mínimo 3 caracteres!";
+            }
+            if(mensagem.includes("maximum length")){
+                return "O nome deve ter no máximo 100 caracteres!";
+            }
+        }
+
+        if(campo == "Descricao"){
+            if(mensagem.includes("required")){
+                return "A descrição é obrigatótia!";
+            }
+            if(mensagem.includes("minimum length")){
+                return "A descrição deve ter no mínimo 5 caracteres!";
+            }
+            if(mensagem.includes("maximum length")){
+                return "A descrição deve ter no máximo 300 caracteres!";
+            }
+        }
+
+        if(campo == "MetaDias"){
+            if(mensagem.includes("between")){
+                return "A meta deve ser entre 1 e 365 dias!"
+            }
+        }
+    }
 
     async function buscarHabitos() {
         
@@ -26,7 +59,8 @@ function MeusHabitos() {
         setHabitos(dados);
     }
     useEffect(() => {
-      buscarHabitos()
+      buscarHabitos();
+
 }, [])
 
     async function CriarHabito() {
@@ -48,11 +82,20 @@ function MeusHabitos() {
      });
 
      const dados = await resposta.json();
+     console.log("DADOS DO BACKEND:", dados);
 
-     if(resposta.ok){
+     if(!resposta.ok){
         console.log(dados);
-        buscarHabitos()
+        setErros(dados.errors);
+        return;
      }
+
+     setErros({});
+     buscarHabitos();
+
+    setNome("");
+    setDescricao("");
+    setMetaDias("");
 }
 
     async function ExcluirHabito(id){
@@ -93,6 +136,8 @@ function MeusHabitos() {
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
                 /> <br /><br />
+
+                    {erros.Nome && <p>{mensagemErro("Nome", erros.Nome[0])}</p>}
                 </div>
 
                 <div className="campo-formulario">
@@ -102,6 +147,8 @@ function MeusHabitos() {
                     value={descricao}
                     onChange={(e) => setDescricao(e.target.value)}
                     /> <br /><br />
+
+                    {erros.Descricao && <p>{mensagemErro("Descricao", erros.Descricao[0])}</p>}
                 </div>
 
                 <div className="campo-formulario">
@@ -111,6 +158,8 @@ function MeusHabitos() {
                     value={metaDias}
                     onChange={(e) => setMetaDias(e.target.value)} 
                     /> <br /><br />
+
+                    {erros.MetaDias && <p>{mensagemErro("MetaDias", erros.MetaDias[0])}</p>}
                 </div>
          
                 <div className="botoes">
