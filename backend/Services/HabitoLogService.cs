@@ -31,6 +31,26 @@ public class HabitoLogService
 
         var metaConcluida = sequenciaAtual >= habito.MetaDias;
 
+        if(dto.Concluido == false)
+        {
+            var log = _habitoLogRepository.RemoveConcluido(dto.HabitoId, usuarioId);
+
+            if (log == null)
+            {
+                return null;
+            }
+
+            var resposta = new RespostaHabitoLogDto
+            {
+                Id = log.Id,
+                Data = log.Data,
+                Concluido = log.Concluido,
+                HabitoId = log.HabitoId
+            };
+
+            return resposta;
+        }
+
         if (metaConcluida)
         {
             return null;
@@ -65,26 +85,6 @@ public class HabitoLogService
             };
         
         return resposta;
-        }
-
-        if(dto.Concluido == false)
-        {
-            var log = _habitoLogRepository.RemoveConcluido(dto.HabitoId, usuarioId);
-
-            if (log == null)
-            {
-                return null;
-            }
-
-            var resposta = new RespostaHabitoLogDto
-            {
-                Id = log.Id,
-                Data = log.Data,
-                Concluido = log.Concluido,
-                HabitoId = log.HabitoId
-            };
-
-            return resposta;
         }
         return null;
     }

@@ -8,6 +8,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
     const [nomeEditado, setNomeEditado] = useState(nome)
     const [descEditada, setDescEditada ] = useState(descricao)
     const [metaDiasEditado, setMetaDiasEditado] = useState(metaDias)
+    const [msgMeta, setMsgMeta] = useState("");
 
       useEffect(() => {
       buscarSequencia()
@@ -39,6 +40,8 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
 }, [concluido])
 
     async function marcarConcluido(novoEstado){
+
+        console.log("marcarConcluido foi chamada");
     
     const token = localStorage.getItem("token")
     
@@ -60,12 +63,16 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             concluido: novoEstado
         })
       })
+
       const dados = await resposta.json()
       console.log(dados)
 
     if(resposta.ok){
         buscarMaiorSequencia();
         buscarSequencia();
+        buscarProgresso();
+    }else{
+        buscarProgresso();
     }
     }
 
@@ -91,13 +98,32 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
       })  
     });
 
-    console.log("status:", resposta.status);
-
       if(resposta.ok){
         buscarHabitos();
         setEditando(false);
       }
 }
+
+    async function buscarProgresso() {
+         console.log("buscarProgresso foi chamada");
+        const token = localStorage.getItem("token");
+
+        const resposta = await fetch(`http://localhost:5259/api/HabitosLog/progresso/${id}`, {
+
+          method: "GET",
+
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+
+        });
+        
+        const dados = await resposta.json();
+        setMsgMeta(dados.mensagem);
+        console.log(dados);
+        
+    }
 
     return(
         <div className={modo === "gerenciamento" ? "habito-card gerenciamento" : "habito-card"}>
@@ -108,6 +134,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
                 <p>Sequência atual: 🔥{sequenciaAtual}</p>
             )}
             <p>Meta: {metaDias} dias </p>
+            {msgMeta && <p>{msgMeta}</p>}
 
             {modo === "gerenciamento" && (
     <>
