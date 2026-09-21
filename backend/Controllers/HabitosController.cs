@@ -130,5 +130,14 @@ public  class HabitosController : ControllerBase
 
         return Ok(resultado);
     }
-  
+
+    [HttpGet("todos")]
+    public IActionResult ListarTodos()
+    {
+        var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
+
+        var habitos = _habitoService.ListarTodos(usuarioId);
+
+        return Ok(habitos);
+    }
 }

@@ -9,15 +9,20 @@ function Dashboard() {
       const token = localStorage.getItem("token")
 
       const resposta = await fetch("http://localhost:5259/api/Habitos", {
+        
         method: "GET",
+
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         }
       })
 
+      console.log("Habitos:", resposta.status)
+
       const dados = await resposta.json()
       setHabitos(dados)
+      console.log("Hábitos recebidos no Dashboard:", dados)
     }
 
     async function buscarLogs() {
@@ -86,6 +91,10 @@ function Dashboard() {
       }
   }
 
+  function removerHabDashboard(id){
+    setHabitos(habitos.filter(habito => habito.id !== id));
+  }
+
   return (
     <main>
       <h1>Olá! 👋</h1>
@@ -130,6 +139,7 @@ function Dashboard() {
             concluido={concluidoHoje}
             atualizarLogs={atualizarLogs}
             buscarMaiorSequencia={buscarMaiorSequencia}
+            removerHabito={removerHabDashboard}
             modo="dashboard"
           />
         )

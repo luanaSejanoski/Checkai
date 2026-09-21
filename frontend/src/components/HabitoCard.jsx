@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo, excluir, buscarHabitos}){
+function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorSequencia, metaDias, modo, excluir, buscarHabitos, removerHabito}){
   
     const [concluidoHoje, setConcluidoHoje] = useState(concluido)
     const [sequenciaAtual, setSequenciaAtual] = useState(0)
@@ -67,14 +67,19 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
       const dados = await resposta.json()
       console.log(dados)
 
-    if(resposta.ok){
-        buscarMaiorSequencia();
-        buscarSequencia();
-        buscarProgresso();
-    }else{
-        buscarProgresso();
-    }
-    }
+   if(resposta.ok){
+    buscarMaiorSequencia();
+    buscarSequencia();
+}
+
+    const progresso = await buscarProgresso();
+
+   if(progresso.concluido){
+    setTimeout(() => {
+        removerHabito(id);
+    }, 3000);
+}
+}
 
     async function salvarEdicao(id) {
 
@@ -120,9 +125,12 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
         });
         
         const dados = await resposta.json();
+
         setMsgMeta(dados.mensagem);
+
         console.log(dados);
-        
+
+        return dados;
     }
 
     return(

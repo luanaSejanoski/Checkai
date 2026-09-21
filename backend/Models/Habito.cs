@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+
+
 namespace Checkai.Models;
 
 public class Habito
@@ -14,5 +17,6 @@ public class Habito
 
     public DateTime DataCriacao { get; set; }
 
+    [JsonIgnore]
     public List<HabitoLog> Logs { get; set; } = new();
 }

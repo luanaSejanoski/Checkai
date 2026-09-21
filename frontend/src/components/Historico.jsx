@@ -19,7 +19,7 @@ useEffect(() => {
     async function buscarHabitos() {
         const token = localStorage.getItem("token");
 
-        const resposta = await fetch("http://localhost:5259/api/Habitos", {
+        const resposta = await fetch("http://localhost:5259/api/Habitos/todos", {
 
          method: "GET",
 
@@ -74,6 +74,9 @@ useEffect(() => {
                 key={dia.data}>
               <p>{new Date(dia.data).toLocaleDateString("pt-BR")}</p>
               <p>{dia.concluido ? "✓" : "✗"}</p>
+              {dia.mensagem &&(
+               <p>{dia.mensagem}</p> 
+              )}
             </div>
         ))}
         </div>

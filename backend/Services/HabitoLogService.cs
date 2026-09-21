@@ -248,9 +248,31 @@ public class HabitoLogService
 
         var dataInicial = resultado.DataCriacao;
 
+        var logsConcluidos = logs.Where(l => l.Concluido)
+            .OrderByDescending(l => l.Data)
+            .ToList();
+
+        int sequencia = 0;
+        DateTime? dataConclusao = null;
+
+        foreach (var log in logsConcluidos)
+        {
+            sequencia++;
+
+            if(sequencia == resultado.MetaDias)
+            {
+                dataConclusao = log.Data;
+                break;
+            }
+        }
+
         var dataFinal = DateTime.Today;
 
-
+        if (dataConclusao.HasValue)
+        {
+            dataFinal = dataConclusao.Value;
+        }
+     
         for(int i = 0; dataInicial.AddDays(i) <= dataFinal; i++)
         {
             var data = dataInicial.AddDays(i);
@@ -269,8 +291,8 @@ public class HabitoLogService
                     NomeHabito = resultado.Nome
                 };
             }
-           else
-{
+           else 
+                {
                 resposta = new RespostaHabitoLogDto
             {
                 Id = logDoDia.Id,
@@ -279,7 +301,12 @@ public class HabitoLogService
                 HabitoId = logDoDia.HabitoId,
                 NomeHabito = resultado.Nome
             };
-}
+                }
+
+             if( dataConclusao.HasValue && data.Date == dataConclusao.Value.Date)
+            {
+                resposta.Mensagem = $"🎉 Meta de {resultado.MetaDias} dias concluída!";
+            }
 
              Historico.Add(resposta);
     } 

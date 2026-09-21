@@ -1,5 +1,6 @@
 // Service: responsável pelas regras de negócio e pela lógica do sistema.
 
+using Checkai.Controllers;
 using Checkai.DTOs;
 using Checkai.Models;
 using Checkai.Repositories;
@@ -13,10 +14,16 @@ public  class HabitoService
 
     private readonly HabitoLogRepository _repositoryLog;
 
-    public HabitoService(HabitoRepository repository, HabitoLogRepository repositoryLog)
+    private readonly HabitoLogService _habitoLogService;
+
+
+
+    public HabitoService(HabitoRepository repository, HabitoLogRepository repositoryLog, HabitoLogService habitoLogService)
     {
         _repository = repository;
         _repositoryLog = repositoryLog;
+        _habitoLogService = habitoLogService;
+
     }
 
     //criar habito
@@ -45,12 +52,32 @@ public  class HabitoService
 }
 
     //listar habitos
-    public List<Habito> Listar(int usuarioId)
+    
+public List<Habito> Listar(int usuarioId)
 {
     var habitos = _repository.Listar(usuarioId);
+        var habitosAtivos = new List<Habito>();
 
-    return habitos;
-}
+        foreach(var habito in habitos)
+        {
+            var resultado = _habitoLogService.CalcularSequencia(
+                habito.Id,
+                usuarioId
+            );
+
+            if(resultado < habito.MetaDias)
+            {
+
+    Console.WriteLine($"Adicionando: {habito.Nome}");
+                habitosAtivos.Add(habito);
+            }
+        }
+
+Console.WriteLine($"Hábitos ativos retornados: {habitosAtivos.Count}");
+        return habitosAtivos;
+    }
+
+
 
     //buscar habito pelo id
     public Habito? BuscarPorId(int id, int usuarioId)
@@ -163,4 +190,9 @@ public  class HabitoService
         }
             return maiorSequencia;
     }
+
+    public List<Habito> ListarTodos(int usuarioId)
+    {
+        return _repository.Listar(usuarioId);
+    }  
 }
