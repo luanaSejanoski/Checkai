@@ -9,9 +9,11 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
     const [descEditada, setDescEditada ] = useState(descricao)
     const [metaDiasEditado, setMetaDiasEditado] = useState(metaDias)
     const [msgMeta, setMsgMeta] = useState("");
+    const [diasRestantes, setDiasRestantes] = useState(0);
 
       useEffect(() => {
-      buscarSequencia()
+      buscarSequencia();
+      buscarProgresso();
 }, [id])
 
     async function buscarSequencia(){
@@ -127,8 +129,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
         const dados = await resposta.json();
 
         setMsgMeta(dados.mensagem);
-
-        console.log(dados);
+        setDiasRestantes(dados.diasRestantes);
 
         return dados;
     }
@@ -143,6 +144,14 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             )}
             <p>Meta: {metaDias} dias </p>
             {msgMeta && <p>{msgMeta}</p>}
+
+            {diasRestantes > 0 && (
+            <p>
+                {diasRestantes === 1
+                  ? "Falta 1 dia"
+                  : `Faltam ${diasRestantes} dias`}
+            </p>
+            )}
 
             {modo === "gerenciamento" && (
     <>
