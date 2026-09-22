@@ -5,6 +5,8 @@ function Historico(){
     const [habitos, setHabitos] = useState([]);
     const [habSelecionado, setHabSelecionado] = useState("");
     const [historico, setHistorico] = useState([]);
+    const [dropdownAberto, setDropdownAberto] = useState(false);
+    const [pesquisa, setPesquisa] = useState("");
 
     useEffect(() => {
     buscarHabitos();
@@ -59,17 +61,37 @@ useEffect(() => {
 
     return (
         <div>
-        <select onChange={(e) => {
-        setHabSelecionado(e.target.value)
-}}>
-        {habitos.map((habito) => (
-        <option key={habito.id} value={habito.id}>
-            {habito.nome}
-        </option>
-    ))}
-        </select>
 
-        <div className="historico-grid">
+    <div className="lista-habitos">
+
+    <input
+        type="text"
+        placeholder="Pesquisar hábito..."
+        value={pesquisa}
+        onChange={(e) => setPesquisa(e.target.value)}
+    />
+
+    <div className="opcoes-habitos">
+    {habitos
+        .filter(habito =>
+            habito.nome.toLowerCase().includes(pesquisa.toLowerCase())
+        )
+        .map((habito) => (
+            <div
+                className="item-habito"
+                key={habito.id}
+                onClick={() => {
+                    setHabSelecionado(habito.id);
+                }}
+            >
+                {habito.nome}
+            </div>
+        ))}
+        </div>
+</div>
+        
+
+         <div className="historico-grid">
         {historico.map((dia) =>(
             <div className={dia.concluido ? "dia-historico concluido" : "dia-historico nao-concluido"} 
                 key={dia.data}>

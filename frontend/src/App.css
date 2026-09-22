@@ -179,9 +179,40 @@ main{
   text-align: center;
 }
 
-
 .historico-grid{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 15px;
+}
+
+.botao-habito {
+  width: 250px;
+}
+
+.lista-habitos {
+    width: 250px;
+    height: 120px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.item-habito {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.item-habito:hover{
+  background-color: #EEC7FC;
+}
+
+.lista-habitos input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.opcoes-habitos {
+  height: 75px;
+  overflow-y: auto;
 }
