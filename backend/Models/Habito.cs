@@ -17,6 +17,10 @@ public class Habito
 
     public DateTime DataCriacao { get; set; }
 
+    public DateTime DataInicioMeta { get; set; }
+
+    public DateTime DataAlteracaoMeta { get; set; }
+
     [JsonIgnore]
     public List<HabitoLog> Logs { get; set; } = new();
 }

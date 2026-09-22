@@ -49,9 +49,10 @@ useEffect(() => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             }
-        })
+        });
 
         const dados = await resposta.json();
+
         setHistorico(dados);
         console.log(dados);
     }

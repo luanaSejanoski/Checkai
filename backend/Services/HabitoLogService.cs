@@ -81,7 +81,6 @@ public class HabitoLogService
                 Data = logCriado.Data,
                 Concluido = logCriado.Concluido,
                 HabitoId = logCriado.HabitoId
-
             };
         
         return resposta;
@@ -173,7 +172,10 @@ public class HabitoLogService
                 return 0;
             }
 
-        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId);
+        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId)
+                   .Where(l => l.Data.Date >= habito.DataInicioMeta.Date)
+                   .ToList();
+        
         
         var logsConcluidos = logs.Where(l => l.Concluido)
         .OrderByDescending(l => l.Data)
@@ -232,8 +234,7 @@ public class HabitoLogService
     }
 
       //Mostra historico do habito
-      public List<RespostaHabitoLogDto>? Historico (int habitoId, int usuarioId)
-      
+      public List<RespostaHabitoLogDto>? Historico (int habitoId, int usuarioId)   
     {
         var resultado = _habitoRepository.BuscarPorId(habitoId, usuarioId);
 
@@ -248,21 +249,34 @@ public class HabitoLogService
 
         var dataInicial = resultado.DataCriacao;
 
-        var logsConcluidos = logs.Where(l => l.Concluido)
+        var logsConcluidos = logs.
+            Where(l => l.Concluido && l.Data.Date >= resultado.DataInicioMeta.Date)
             .OrderByDescending(l => l.Data)
             .ToList();
 
         int sequencia = 0;
         DateTime? dataConclusao = null;
 
-        foreach (var log in logsConcluidos)
+        if(logsConcluidos.Count > 0)
         {
-            sequencia++;
+           sequencia = 1;
 
-            if(sequencia == resultado.MetaDias)
+           for(int i = 1; i < logsConcluidos.Count; i++)
             {
-                dataConclusao = log.Data;
-                break;
+                if(logsConcluidos[i].Data.Date == logsConcluidos[ i - 1].Data.Date.AddDays(-1))
+                {
+                    sequencia++;
+
+                    if(sequencia == resultado.MetaDias)
+                    {
+                        dataConclusao = logsConcluidos[i].Data;
+                        break;
+                    }
+                }
+                    else
+                    {
+                        break;
+                    }
             }
         }
 
@@ -302,6 +316,11 @@ public class HabitoLogService
                 NomeHabito = resultado.Nome
             };
                 }
+
+            if(data.Date == resultado.DataAlteracaoMeta.Date)
+            {
+                resposta.Mensagem = $"🔄 Meta alterada para {resultado.MetaDias} dias";
+            }
 
              if( dataConclusao.HasValue && data.Date == dataConclusao.Value.Date)
             {

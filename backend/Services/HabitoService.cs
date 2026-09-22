@@ -17,7 +17,6 @@ public  class HabitoService
     private readonly HabitoLogService _habitoLogService;
 
 
-
     public HabitoService(HabitoRepository repository, HabitoLogRepository repositoryLog, HabitoLogService habitoLogService)
     {
         _repository = repository;
@@ -45,17 +44,18 @@ public  class HabitoService
         Descricao = dto.Descricao,
         MetaDias = dto.MetaDias,
         DataCriacao = DateTime.Now.Date,
-        UsuarioId = usuarioId
+        UsuarioId = usuarioId,
+        DataInicioMeta = DateTime.Now.Date
     };
 
     return _repository.Criar(habito);
 }
 
-    //listar habitos
-    
-public List<Habito> Listar(int usuarioId)
+    //listar habitos    
+    public List<Habito> Listar(int usuarioId)
 {
     var habitos = _repository.Listar(usuarioId);
+
         var habitosAtivos = new List<Habito>();
 
         foreach(var habito in habitos)
@@ -67,17 +67,12 @@ public List<Habito> Listar(int usuarioId)
 
             if(resultado < habito.MetaDias)
             {
-
-    Console.WriteLine($"Adicionando: {habito.Nome}");
                 habitosAtivos.Add(habito);
             }
         }
 
-Console.WriteLine($"Hábitos ativos retornados: {habitosAtivos.Count}");
         return habitosAtivos;
     }
-
-
 
     //buscar habito pelo id
     public Habito? BuscarPorId(int id, int usuarioId)
@@ -93,6 +88,13 @@ Console.WriteLine($"Hábitos ativos retornados: {habitosAtivos.Count}");
         if(habito == null)
         {
             return null;
+        }
+
+
+        if(habito.MetaDias != dto.MetaDias)
+        {
+            habito.DataInicioMeta = DateTime.Now.Date;
+            habito.DataAlteracaoMeta = DateTime.Now.Date;
         }
 
         habito.Nome = dto.Nome;
@@ -143,6 +145,7 @@ Console.WriteLine($"Hábitos ativos retornados: {habitosAtivos.Count}");
 
     }
 
+    //calcular maior sequencia entre todos os hábitos
     public int CalcularMaiorSequencia(int usuarioId)
     {
         var habitos = _repository.Listar(usuarioId);
@@ -191,6 +194,7 @@ Console.WriteLine($"Hábitos ativos retornados: {habitosAtivos.Count}");
             return maiorSequencia;
     }
 
+    //listar todos os hábitos
     public List<Habito> ListarTodos(int usuarioId)
     {
         return _repository.Listar(usuarioId);
