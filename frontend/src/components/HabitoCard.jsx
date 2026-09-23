@@ -145,13 +145,17 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
             <p>Meta: {metaDias} dias </p>
             {msgMeta && <p>{msgMeta}</p>}
 
-            {diasRestantes > 0 && (
+            {modo === "dashboard" &&(
+                diasRestantes > 0 && (
             <p>
                 {diasRestantes === 1
                   ? "Falta 1 dia"
                   : `Faltam ${diasRestantes} dias`}
             </p>
+                )
             )}
+            
+           
 
             {modo === "gerenciamento" && (
     <>

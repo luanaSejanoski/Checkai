@@ -128,9 +128,43 @@ public  class HabitoService
 
         var logsConcluidos = _repositoryLog.ListarConcluidosHoje(usuarioId);
 
+
         foreach(var habito in habitos)
         {
             var concluidoHoje = logsConcluidos.Any(h => h.HabitoId == habito.Id);
+
+            var logs = _repositoryLog.ListarPorHabito(habito.Id, usuarioId);
+
+            var logsConcluidoHabito = logs
+            .Where(l => l.Concluido)
+            .OrderByDescending(l => l.Data)
+            .ToList();
+
+            int sequencia = 0;
+
+            if (logsConcluidoHabito.Any())
+            {
+                sequencia = 1;
+            }
+
+            for(int i = 1; i < logsConcluidoHabito.Count; i++)
+            {
+                if(logsConcluidoHabito[i].Data.Date == logsConcluidoHabito[i - 1].Data.Date.AddDays(-1))
+                {
+                    sequencia++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            var metaConcluida = sequencia >= habito.MetaDias;
+
+            if (metaConcluida)
+            {
+                continue;
+            }
 
             var habitoHoje = new HabitoHojeDto
             {
@@ -142,7 +176,6 @@ public  class HabitoService
             resposta.Add(habitoHoje);
         }
             return resposta;
-
     }
 
     //calcular maior sequencia entre todos os hábitos

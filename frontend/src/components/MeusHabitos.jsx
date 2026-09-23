@@ -82,11 +82,9 @@ function MeusHabitos() {
      });
 
      const dados = await resposta.json();
-     console.log("DADOS DO BACKEND:", dados);
 
      if(!resposta.ok){
         console.log(dados);
-        setErros(dados.errors);
         return;
      }
 
