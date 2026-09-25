@@ -190,11 +190,11 @@ main{
 }
 
 .lista-habitos {
-    width: 250px;
-    height: 120px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    background-color: white;
+  width: 250px;
+  height: 120px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: white;
 }
 
 .item-habito {
@@ -215,4 +215,102 @@ main{
 .opcoes-habitos {
   height: 75px;
   overflow-y: auto;
+}
+
+.perfil-container {
+    display: flex;
+    gap: 28px;
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.perfil-card{
+  width: 40%;
+  background-color: #ccc;
+  padding: 30px;
+  border-radius: 3%;
+  box-sizing: border-box;
+}
+
+.perfil-card h2{
+  text-align: center;
+}
+
+.jornada-card{
+  width: 60%;
+  border-radius: 3%;
+  background-color: #ccc;
+}
+
+.perfil-card,
+.jornada-card {
+  min-height: 70vh;
+}
+
+.foto-perfil{
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EEC7FC;
+}
+
+.editar-perfil{
+  width: 90%;
+  height: 40px;
+  border-radius: 9px;
+  margin-right: 30px;
+  margin-top: 50px;
+}
+
+.perfil-salvar{
+  width: 60%;
+  height: 40px;
+  border-radius: 9px;
+  margin-right: 30px;
+  margin-top: 50px;
+}
+
+.perfil-cancelar{
+  width: 23%;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 9px;
+}
+
+.perfil-card input{
+  width: 90%;
+  height: 40px;
+  border-radius: 9px;
+}
+
+.cards-jornada{
+  padding: 5%;
+}
+
+.estatisticas{
+  display: flex;
+  gap: 20px;
+}
+
+.estatistica{
+  width: 10%;
+  flex: 1;
+  padding: 3%;
+  margin-top: 7%;
+  background-color: #EEC7FC;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.estatistica strong{
+  font-size: 30px;
+}
+
+.icone-estatistica{
+  font-size: 30px;
 }

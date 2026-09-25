@@ -1,40 +1,80 @@
+import { useState } from "react";
 
 function Perfil(){
+
+    const [editando, setEditando] = useState(false);
+
     return(
         <div className="perfil-container">
 
-            <div className="perfil-card">
-                <h2>Meu Perfil</h2>
+               <div className="perfil-card">
 
-                <label>Nome</label>
-                <input type="text" />
+                <div className="foto-perfil">
+                    <span>L</span>
+                </div>
 
-                <label>E-mail</label>
-                <input type="email" />
+                <label>Nome:</label><br />
+                <input
+                    type="text"
+                    readOnly={!editando}
+                /><br /><br />
 
-                <button>salvar</button><br />
-                <button>Cancelar</button>
+                <label>E-mail:</label><br />
+                <input
+                    type="email"
+                    readOnly={!editando}
+                /><br /><br />
+
+                {editando ? (
+                    <>
+                        <button className="perfil-salvar">
+                            Salvar
+                        </button>
+
+                        <button onClick={() => setEditando(false)}
+                         className="perfil-cancelar"
+                         >
+                            Cancelar
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        onClick={() => setEditando(true)}
+                        className="editar-perfil"
+                    >
+                        Editar Perfil
+                    </button>
+                )}
+
             </div>
 
             <div className="jornada-card">
 
-                <h2>Minha jornada</h2>
+                <div className="cards-jornada">
+                <h2>📊 Minha jornada</h2>
 
-                <div>
-                    <p>Hábitos criados</p>
-                    <span>0</span>
+                <div className="estatisticas">
+
+                    <div className="estatistica">
+                        <span className="icone-estatistica">✓</span><br /><br />
+                        <strong>0</strong><br />
+                        <p>Hábitos criados</p>
+                    </div>
+
+                    <div className="estatistica">
+                        <span className="icone-estatistica">◎</span><br /><br />
+                        <strong>0</strong><br />
+                        <p>Metas concluídas</p>
+                    </div>
+
+                    <div className="estatistica">
+                        <span className="icone-estatistica">▣</span><br /><br />
+                        <strong>0</strong><br />
+                        <p>Dias registrados</p>
+                    </div>
+                </div>
                 </div>
 
-                <div>
-                    <p>Metas concluídas</p>
-                    <span>0</span>
-                </div>
-
-
-                <div>
-                    <p>Dias registrados</p>
-                    <span>0</span>
-                </div>
             </div>
 
         </div>
