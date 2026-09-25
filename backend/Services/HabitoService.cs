@@ -62,8 +62,10 @@ public  class HabitoService
         {
             var resultado = _habitoLogService.CalcularSequencia(
                 habito.Id,
-                usuarioId
+                usuarioId,
+                false
             );
+            Console.WriteLine($"Hábito: {habito.Nome} | Sequência: {resultado} | Meta: {habito.MetaDias}");
 
             if(resultado < habito.MetaDias)
             {
@@ -93,7 +95,7 @@ public  class HabitoService
 
         if(habito.MetaDias != dto.MetaDias)
         {
-            habito.DataInicioMeta = DateTime.Now.Date;
+            habito.DataInicioMeta = DateTime.Now.Date.AddDays(1);
             habito.DataAlteracaoMeta = DateTime.Now.Date;
         }
 
@@ -136,7 +138,7 @@ public  class HabitoService
             var logs = _repositoryLog.ListarPorHabito(habito.Id, usuarioId);
 
             var logsConcluidoHabito = logs
-            .Where(l => l.Concluido)
+            .Where(l => l.Concluido && l.Data.Date >= habito.DataInicioMeta.Date)
             .OrderByDescending(l => l.Data)
             .ToList();
 
@@ -170,11 +172,13 @@ public  class HabitoService
             {
                 Id = habito.Id,
                 Nome = habito.Nome,
-                ConcluidoHoje = concluidoHoje
+                ConcluidoHoje = concluidoHoje,
+                MetaDias = habito.MetaDias
             };
 
             resposta.Add(habitoHoje);
         }
+        
             return resposta;
     }
 

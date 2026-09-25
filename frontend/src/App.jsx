@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard'
 import MeusHabitos from './components/MeusHabitos'
 import Historico from './components/Historico'
+import Perfil from './components/Perfil'
 import Login from './components/Login'
 import { useState } from 'react'
 
@@ -10,6 +11,7 @@ function App({nome, email}) {
 const [logado, setLogado] = useState(false)
 const [pagina, setPagina] = useState("dashboard")
 const [historico, setHistorico] = useState("historico")
+const [perfil, setPerfil] = useState("perfil")
 
     if(!logado){
       return <Login onLogin={setLogado}/>
@@ -22,6 +24,7 @@ const [historico, setHistorico] = useState("historico")
     {pagina === "dashboard" && <Dashboard />}
     {pagina === "habitos" && <MeusHabitos />}
     {pagina === "historico" && <Historico/>}
+    {pagina === "perfil" && <Perfil/>}
   </main>
 </div>
   

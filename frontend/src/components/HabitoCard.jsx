@@ -133,6 +133,7 @@ function HabitoCard({id, nome, descricao, concluido, atualizarLogs, buscarMaiorS
 
         return dados;
     }
+    console.log("META DIAS NO CARD:", metaDias);
 
     return(
         <div className={modo === "gerenciamento" ? "habito-card gerenciamento" : "habito-card"}>

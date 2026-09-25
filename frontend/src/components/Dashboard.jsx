@@ -8,7 +8,7 @@ function Dashboard() {
     async function buscarHabitos() {
       const token = localStorage.getItem("token")
 
-      const resposta = await fetch("http://localhost:5259/api/Habitos", {
+      const resposta = await fetch("http://localhost:5259/api/Habitos/hoje", {
         
         method: "GET",
 

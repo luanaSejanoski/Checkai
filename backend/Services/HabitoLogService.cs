@@ -27,7 +27,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(dto.HabitoId, usuarioId);
+        var sequenciaAtual = CalcularSequencia(dto.HabitoId, usuarioId, true);
 
         var metaConcluida = sequenciaAtual >= habito.MetaDias;
 
@@ -163,53 +163,54 @@ public class HabitoLogService
     }
 
     //Calcula a sequencia do habito
-    public int CalcularSequencia(int habitoId, int usuarioId)
+public int CalcularSequencia(int habitoId, int usuarioId, bool exigirHoje)
+{
+    var habito = _habitoRepository.BuscarPorId(habitoId, usuarioId);
+
+    if(habito == null)
     {
-          var habito = _habitoRepository.BuscarPorId(habitoId, usuarioId);
+        return 0;
+    }
 
-            if(habito == null)
-            {
-                return 0;
-            }
+    var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId)
+        .Where(l => l.Data.Date >= habito.DataInicioMeta.Date)
+        .ToList();
 
-        var logs = _habitoLogRepository.ListarPorHabito(habitoId, usuarioId)
-                   .Where(l => l.Data.Date >= habito.DataInicioMeta.Date)
-                   .ToList();
-        
-        
-        var logsConcluidos = logs.Where(l => l.Concluido)
+    var logsConcluidos = logs
+        .Where(l => l.Concluido)
         .OrderByDescending(l => l.Data)
         .ToList();
 
-        if(logsConcluidos.Count == 0)
-        {
-            return 0;
-        }
-
-        //pega o primeiro log da lista e compara com a data atual
-        var concluidoHoje = logsConcluidos[0].Data.Date == DateTime.Now.Date;
-
-        if (!concluidoHoje)
-        {
-            return 0;
-        }
-
-        int sequencia = 1;
-
-        for(int i = 1; i < logsConcluidos.Count; i++)
-        {
-            // Verifica se as datas são consecutivas e interrompe a contagem ao encontrar uma falha.
-            if(logsConcluidos[i].Data.Date == logsConcluidos[i - 1].Data.Date.AddDays(-1))
-            {
-                sequencia++;
-            }
-            else
-            {
-                break;
-            }
-        }
-            return sequencia;
+    if(logsConcluidos.Count == 0)
+    {
+        return 0;
     }
+
+    //pega o primeiro log da lista e compara com a data atual
+    var concluidoHoje = logsConcluidos[0].Data.Date == DateTime.Now.Date;
+
+    if (exigirHoje && !concluidoHoje)
+    {
+        return 0;
+    }
+
+    int sequencia = 1;
+
+    for(int i = 1; i < logsConcluidos.Count; i++)
+    {
+        // Verifica se as datas são consecutivas e interrompe a contagem ao encontrar uma falha.
+        if(logsConcluidos[i].Data.Date == logsConcluidos[i - 1].Data.Date.AddDays(-1))
+        {
+            sequencia++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return sequencia;
+}
 
     //Calcula dias restantes para concluir o habito
     public int? CalcularDiasRestantes(int habitoId, int usuarioId)
@@ -221,7 +222,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId);
+        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId, true);
 
         var diasRestantes = resultado.MetaDias - sequenciaAtual;
 
@@ -269,7 +270,7 @@ public class HabitoLogService
 
                     if(sequencia == resultado.MetaDias)
                     {
-                        dataConclusao = logsConcluidos[i].Data;
+                        dataConclusao = logsConcluidos[0].Data;
                         break;
                     }
                 }
@@ -343,7 +344,7 @@ public class HabitoLogService
             return null;
         }
 
-        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId);
+        var sequenciaAtual = CalcularSequencia(habitoId, usuarioId, true);
 
         var diasRestantes = resultado.MetaDias - sequenciaAtual;
 

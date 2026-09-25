@@ -6,6 +6,8 @@ public class HabitoHojeDto
 
     public string Nome {get; set; } = string.Empty;
 
+    public int MetaDias { get; set; }
+
     public bool ConcluidoHoje {get; set; }
 
 }

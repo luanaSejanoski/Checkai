@@ -126,7 +126,7 @@ public  class HabitosController : ControllerBase
     {
         var usuarioId = int.Parse(User.FindFirst("UsuarioId")!.Value);
 
-        var resultado = _habitoLogService.CalcularSequencia(habitoId, usuarioId);
+        var resultado = _habitoLogService.CalcularSequencia(habitoId, usuarioId, true);
 
         return Ok(resultado);
     }
