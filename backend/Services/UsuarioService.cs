@@ -73,4 +73,11 @@ public string? Login(LoginUsuarioDto dto)
         return tokenString;
 
     }
+
+    public RespostaUsuarioDto? BuscarPorId(int id)
+    {
+       var user = _userRepository.BuscarPorId(id);
+
+       return user;
+    }
 }

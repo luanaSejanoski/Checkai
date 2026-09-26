@@ -1,6 +1,8 @@
 using Checkai.DTOs;
 using Checkai.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Checkai.Controller;
 
@@ -41,4 +43,23 @@ public class UsuarioController : ControllerBase
         }
         );
     }
+
+    [Authorize]
+    [HttpGet("perfil")]
+    public IActionResult Perfil()
+    {
+        var usuarioId = User.FindFirst("UsuarioId");
+
+        var id = int.Parse(usuarioId.Value);
+
+        var usuario = _userService.BuscarPorId(id);
+
+        if(usuario == null)
+        {
+            return NotFound("Usuário não encontrado.");
+        }
+
+        return Ok(usuario);
+    }
+    
 }

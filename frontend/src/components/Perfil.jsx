@@ -3,6 +3,8 @@ import { useState } from "react";
 function Perfil(){
 
     const [editando, setEditando] = useState(false);
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
 
     return(
         <div className="perfil-container">
@@ -16,12 +18,17 @@ function Perfil(){
                 <label>Nome:</label><br />
                 <input
                     type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
                     readOnly={!editando}
                 /><br /><br />
+                
 
                 <label>E-mail:</label><br />
                 <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     readOnly={!editando}
                 /><br /><br />
 

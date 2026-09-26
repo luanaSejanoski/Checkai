@@ -67,10 +67,6 @@ main{
   cursor: pointer;
 }
 
-.campo input{
-  background-color: blueviolet;
-}
-
 .habitos-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
