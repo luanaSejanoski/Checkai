@@ -61,5 +61,29 @@ public class UsuarioController : ControllerBase
 
         return Ok(usuario);
     }
+
+    [Authorize]
+    [HttpPut("perfil")]
+    public IActionResult AlterarPerfil(AlterarUsuarioDto dto)
+    {
+        var usuarioId = User.FindFirst("UsuarioId");
+
+        var id = int.Parse(usuarioId.Value);
+
+        var resultado = _userService.Alterar(id, dto);
+
+        if(resultado == null)
+        {
+            return NotFound("Usuário não encontrado.");
+        }
+
+        var resposta = new RespostaUsuarioDto
+        {
+            Nome = resultado.Nome,
+            Email = resultado.Email
+        };
+
+        return Ok(resposta);
+    }
     
 }

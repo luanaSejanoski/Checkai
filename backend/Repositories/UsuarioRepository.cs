@@ -24,21 +24,16 @@ public class UsuarioRepository
         return _context.Usuario.FirstOrDefault(u => u.Email == email);
     }
 
-    public RespostaUsuarioDto? BuscarPorId(int id)
+    public Usuario? BuscarPorId(int id)
     {
-        var user = _context.Usuario.FirstOrDefault(u => u.Id == id);
+        return _context.Usuario.FirstOrDefault(u => u.Id == id);
+    }
 
-        if(user == null)
-        {
-            return null;
-        }
+    public Usuario Alterar(Usuario usuario)
+    {
+        _context.Usuario.Update(usuario);
+        _context.SaveChanges();
 
-        var resposta = new RespostaUsuarioDto
-        {
-            Nome = user.Nome,
-            Email = user.Email
-        };
-
-        return resposta;
+        return usuario;
     }
 }

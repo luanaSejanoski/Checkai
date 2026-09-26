@@ -34,6 +34,33 @@ function Perfil(){
         
     }
 
+    async function salvarPerfil(){
+        const token = localStorage.getItem("token");
+
+        const resposta = await fetch("http://localhost:5259/api/Usuario/perfil", {
+            
+        method: "PUT",
+
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+            nome,
+            email
+        })
+    });
+
+        const dados = await resposta.json();
+
+        if(resposta.ok){
+            setNomeOriginal(dados.nome);
+            setEmailOriginal(dados.email);
+            setEditando(false);
+        }
+    }
+
     return(
         <div className="perfil-container">
 
@@ -62,7 +89,8 @@ function Perfil(){
 
                 {editando ? (
                     <>
-                        <button className="perfil-salvar">
+                        <button onClick={() => salvarPerfil()}
+                        className="perfil-salvar">
                             Salvar
                         </button>
 

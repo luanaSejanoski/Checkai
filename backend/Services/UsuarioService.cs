@@ -41,6 +41,11 @@ public string? Login(LoginUsuarioDto dto)
             return null;
         }
 
+        if(dto.Nome != usuario.Nome)
+        {
+            return null;
+        }
+
         if(!BCrypt.Net.BCrypt.Verify(dto.Senha, usuario.SenhaHash))// se a senha nao for valida
         {
             return null;
@@ -76,8 +81,34 @@ public string? Login(LoginUsuarioDto dto)
 
     public RespostaUsuarioDto? BuscarPorId(int id)
     {
-       var user = _userRepository.BuscarPorId(id);
+      var user = _userRepository.BuscarPorId(id);
 
-       return user;
+    if(user == null)
+    {
+        return null;
+    }
+
+    var dto = new RespostaUsuarioDto
+    {
+        Nome = user.Nome,
+        Email = user.Email
+    };
+
+    return dto;
+    }
+
+    public Usuario? Alterar(int id, AlterarUsuarioDto dto)
+    {
+        var usuario = _userRepository.BuscarPorId(id);
+
+        if(usuario == null)
+        {
+            return null;
+        }
+
+        usuario.Nome = dto.Nome;
+        usuario.Email = dto.Email;
+
+        return _userRepository.Alterar(usuario);
     }
 }
