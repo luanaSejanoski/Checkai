@@ -1,10 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Perfil(){
 
     const [editando, setEditando] = useState(false);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
+    const [nomeOriginal, setNomeOriginal] = useState("");
+    const [emailOriginal, setEmailOriginal] = useState("");
+
+    useEffect(() =>{
+        buscarPerfil();
+    },[])
+
+    async function buscarPerfil(){
+        const token = localStorage.getItem("token");
+
+        const resposta = await fetch("http://localhost:5259/api/Usuario/perfil", {
+            
+        method: "GET",
+
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+        });
+
+        const dados = await resposta.json();
+
+        setNome(dados.nome);
+        setEmail(dados.email);
+        setNomeOriginal(dados.nome);
+        setEmailOriginal(dados.email);
+        
+    }
 
     return(
         <div className="perfil-container">
@@ -38,7 +66,11 @@ function Perfil(){
                             Salvar
                         </button>
 
-                        <button onClick={() => setEditando(false)}
+                        <button onClick={() => {
+                         setNome(nomeOriginal);
+                         setEmail(emailOriginal);
+                         setEditando(false);
+                        }}
                          className="perfil-cancelar"
                          >
                             Cancelar
